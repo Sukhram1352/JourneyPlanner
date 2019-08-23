@@ -1,0 +1,223 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="./IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='')/$value"><edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/></edmx:Reference>
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="cds_xmp4gxtransdocheader_sd" xml:lang="en" sap:schema-version="1">
+			<EntityType Name="xAPExC_TransferDocStatus_VHType" sap:label="Value Help: Transfer Document Status" sap:content-version="1">
+				<Key><PropertyRef Name="Value"/><PropertyRef Name="Language"/></Key><Property Name="Value" Type="Edm.String" Nullable="false" MaxLength="10" sap:text="Description" sap:label="Transfer Status"/><Property Name="Language" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Lang." sap:quickinfo="Language Key"/><Property Name="Description" Type="Edm.String" MaxLength="60" sap:label="Short Descript." sap:quickinfo="Short Text for Fixed Values"/></EntityType>
+			<EntityType Name="xMP4GxC_LinkedTransferDoc_UIType" sap:label="Linked Documents" sap:content-version="1">
+				<Key><PropertyRef Name="LinkDocumentKey"/><PropertyRef Name="LinkedTransferDocumentKey"/></Key><Property Name="LinkDocumentKey" Type="Edm.Guid" Nullable="false" sap:label="Appl DB Key" sap:quickinfo="Application Table DB Key"
+					sap:creatable="false" sap:updatable="false"/><Property Name="LinkedTransferDocumentKey" Type="Edm.Guid" Nullable="false" sap:label="Appl DB Key" sap:quickinfo="Application Table DB Key"/><Property Name="LinkDocumentNumber" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Document"
+					sap:quickinfo="Document Number"/><Property Name="ExternalUUID" Type="Edm.String" MaxLength="32" sap:label="EXT.Trans.UUID" sap:quickinfo="External Transfer UUID"/><Property Name="Status" Type="Edm.String" MaxLength="10" sap:text="Status_Text" sap:label="Transfer Status"/><Property Name="Status_Text" Type="Edm.String" MaxLength="60" sap:label="Short Descript." sap:quickinfo="Short Text for Fixed Values"
+					sap:creatable="false" sap:updatable="false"/><Property Name="StatusCriticality" Type="Edm.Byte"/><Property Name="Timestamp" Type="Edm.DateTimeOffset" Precision="7" sap:label="Time Stamp"
+					sap:quickinfo="UTC Time Stamp in Long Form (YYYYMMDDhhmmssmmmuuun)"/><Property Name="MessageCategoryCriticality" Type="Edm.Byte"/><Property Name="TecBusinessObjectType" Type="Edm.String" MaxLength="12"/><NavigationProperty Name="to_TransStatus" Relationship="cds_xmp4gxtransdocheader_sd.assoc_F7CAF941A5214AC573A85438EEAE48B4"
+					FromRole="FromRole_assoc_F7CAF941A5214AC573A85438EEAE48B4" ToRole="ToRole_assoc_F7CAF941A5214AC573A85438EEAE48B4"/></EntityType>
+			<EntityType Name="xMP4GxC_TDStatus_VHType" sap:label="Value Help: Get Transfer status" sap:value-list="true" sap:content-version="1">
+				<Key><PropertyRef Name="TDSTATUS"/></Key><Property Name="TDSTATUS" Type="Edm.String" Nullable="false" MaxLength="30"/></EntityType>
+			<EntityType Name="xMP4GxC_TechMsgID_VHType" sap:label="Value Help: Business Message ID" sap:content-version="1">
+				<Key><PropertyRef Name="TechnicalMsgID"/></Key><Property Name="TechnicalMsgID" Type="Edm.String" Nullable="false" MaxLength="70" sap:label="External Technical Message ID"/></EntityType>
+			<EntityType Name="xMP4GxC_TransferDcDirection_VHType" sap:label="Value Help: Transfer Document Direction" sap:content-version="1">
+				<Key><PropertyRef Name="Value"/><PropertyRef Name="Language"/></Key><Property Name="Value" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:text="Description"
+					sap:label="Lower Value" sap:quickinfo="Values for Domains: Single Value / Upper Limit"/><Property Name="Language" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Lang." sap:quickinfo="Language Key"/><Property Name="Description" Type="Edm.String" MaxLength="60" sap:label="Short Descript." sap:quickinfo="Short Text for Fixed Values"/></EntityType>
+			<EntityType Name="xMP4GxC_TransferDoc_UIType" sap:label="UI Consumption View: Transfer Document" sap:content-version="1">
+				<Key><PropertyRef Name="TransferDocumentKey"/></Key><Property Name="TransferDocumentKey" Type="Edm.Guid" Nullable="false" sap:label="Appl DB Key" sap:quickinfo="Application Table DB Key"
+					sap:creatable="false" sap:updatable="false"/><Property Name="ExternalUUID" Type="Edm.String" MaxLength="32" sap:label="Market Message Reference" sap:quickinfo="External Transfer UUID"/><Property Name="TransferDocumentNumber" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Document"
+					sap:quickinfo="Document Number"/><Property Name="ProcessDocumentKey" Type="Edm.Guid" sap:label="Appl DB Key" sap:quickinfo="Application Table DB Key"/><Property Name="TransferDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:filter-restriction="interval"
+					sap:label="Transfer Date"/><Property Name="Timestamp" Type="Edm.DateTimeOffset" Precision="7" sap:label="Time Stamp"
+					sap:quickinfo="UTC Time Stamp in Long Form (YYYYMMDDhhmmssmmmuuun)"/><Property Name="Status" Type="Edm.String" MaxLength="10" sap:label="Transfer Status"/><Property Name="StatusCriticality" Type="Edm.Byte"/><Property Name="Direction" Type="Edm.String" MaxLength="1" sap:text="Direction_Text" sap:label="Direction" sap:value-list="fixed-values"/><Property Name="Direction_Text" Type="Edm.String" MaxLength="60" sap:label="Short Descript." sap:quickinfo="Short Text for Fixed Values"
+					sap:creatable="false" sap:updatable="false"/><Property Name="ReceiverId" Type="Edm.String" MaxLength="40" sap:label="From Partner"/><Property Name="SenderId" Type="Edm.String" MaxLength="40" sap:label="To Partner"/><Property Name="SenderCodeList" Type="Edm.String" MaxLength="3" sap:label="Code List ID"/><Property Name="ReceiverCodeList" Type="Edm.String" MaxLength="3" sap:label="Code List ID"/><Property Name="ExternalPayload" Type="Edm.String" sap:label="Payload" sap:heading=""/><Property Name="ExtBusinessMessageID" Type="Edm.String" MaxLength="70" sap:label="AMID" sap:value-list="standard"/><Property Name="ProcessDocumentNumber" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase"
+					sap:label="Market Communication Process"/><Property Name="TechnicalMsgID" Type="Edm.String" MaxLength="70" sap:label="Format" sap:value-list="fixed-values"/><Property Name="TDStatus" Type="Edm.String" MaxLength="30" sap:label="Message Status" sap:value-list="fixed-values"/><Property Name="TDStatusCriticality" Type="Edm.Byte"/><Property Name="ExternalCommunicationType" Type="Edm.String" MaxLength="10" sap:text="ExternalCommunicationType_Text"
+					sap:label="Communication Channel"/><Property Name="ExternalCommunicationType_Text" Type="Edm.String" MaxLength="60" sap:label="Short Descript."
+					sap:quickinfo="Short Text for Fixed Values" sap:creatable="false" sap:updatable="false"/><NavigationProperty Name="to_Direction" Relationship="cds_xmp4gxtransdocheader_sd.assoc_D74BD54BD5E53D20F59C7C7DCC5C57E3"
+					FromRole="FromRole_assoc_D74BD54BD5E53D20F59C7C7DCC5C57E3" ToRole="ToRole_assoc_D74BD54BD5E53D20F59C7C7DCC5C57E3"/><NavigationProperty Name="to_linkedTransferDocument" Relationship="cds_xmp4gxtransdocheader_sd.assoc_0761491BE0E5ACDE7392CC64728C649B"
+					FromRole="FromRole_assoc_0761491BE0E5ACDE7392CC64728C649B" ToRole="ToRole_assoc_0761491BE0E5ACDE7392CC64728C649B"/><NavigationProperty Name="to_TechnicalMsgID" Relationship="cds_xmp4gxtransdocheader_sd.assoc_9B8CC9478EF82BA21BD1073247C11F57"
+					FromRole="FromRole_assoc_9B8CC9478EF82BA21BD1073247C11F57" ToRole="ToRole_assoc_9B8CC9478EF82BA21BD1073247C11F57"/><NavigationProperty Name="to_TransStatus" Relationship="cds_xmp4gxtransdocheader_sd.assoc_76ACBE1E0432565259C2CDD73D9A1E9B"
+					FromRole="FromRole_assoc_76ACBE1E0432565259C2CDD73D9A1E9B" ToRole="ToRole_assoc_76ACBE1E0432565259C2CDD73D9A1E9B"/></EntityType>
+			<EntityType Name="xMP4GxI_BusinessMessageID_VHType" sap:label="Value Help: Business Message ID" sap:value-list="true"
+				sap:content-version="1">
+				<Key><PropertyRef Name="BusinessMessageID"/><PropertyRef Name="ExtBusinessMessageID"/></Key><Property Name="BusinessMessageID_fc" Type="Edm.Byte" sap:label="Dyn. Field Control" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="BusinessMessageID" Type="Edm.String" Nullable="false" MaxLength="40" sap:field-control="BusinessMessageID_fc"
+					sap:label="Business Message ID"/><Property Name="ExtBusinessMessageID" Type="Edm.String" Nullable="false" MaxLength="70" sap:label="External Business Message ID"/></EntityType>
+			<EntityType Name="xMP4GxI_TransferDoc_UIType" sap:label="UI Interface View: Transfer Document" sap:content-version="1">
+				<Key><PropertyRef Name="TransferDocumentKey"/></Key><Property Name="TransferDocumentKey" Type="Edm.Guid" Nullable="false" sap:label="Appl DB Key" sap:quickinfo="Application Table DB Key"
+					sap:creatable="false" sap:updatable="false"/><Property Name="TransferDocumentNumber" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Document"
+					sap:quickinfo="Document Number"/><Property Name="ExternalUUID" Type="Edm.String" MaxLength="32" sap:label="EXT.Trans.UUID" sap:quickinfo="External Transfer UUID"/><Property Name="TransferDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date"/><Property Name="Timestamp" Type="Edm.DateTimeOffset" Precision="7" sap:label="Time Stamp"
+					sap:quickinfo="UTC Time Stamp in Long Form (YYYYMMDDhhmmssmmmuuun)"/><Property Name="Status" Type="Edm.String" MaxLength="10" sap:label="Transfer Status"/><Property Name="StatusCriticality" Type="Edm.Byte"/><Property Name="Direction" Type="Edm.String" MaxLength="1" sap:label="Direction"/><Property Name="receiver_id" Type="Edm.String" MaxLength="40" sap:label="Receiver ID"/><Property Name="sender_id" Type="Edm.String" MaxLength="40" sap:label="Sender ID"/><Property Name="SenderCodeList" Type="Edm.String" MaxLength="3" sap:label="Code List ID"/><Property Name="ReceiverCodeList" Type="Edm.String" MaxLength="3" sap:label="Code List ID"/><Property Name="ExternalPayload" Type="Edm.String" sap:label="" sap:quickinfo="Payload"/><Property Name="InternalPayload" Type="Edm.String" sap:label="" sap:quickinfo="Payload"/><Property Name="TDStatus" Type="Edm.String" MaxLength="30"/><Property Name="TDStatusCriticality" Type="Edm.Byte"/><Property Name="BusinessMessageID" Type="Edm.String" MaxLength="70" sap:label="Business Message"/><NavigationProperty Name="to_linkedTransferDocument" Relationship="cds_xmp4gxtransdocheader_sd.assoc_76B79D5EBC6D66F95DF4A6F64A223ADC"
+					FromRole="FromRole_assoc_76B79D5EBC6D66F95DF4A6F64A223ADC" ToRole="ToRole_assoc_76B79D5EBC6D66F95DF4A6F64A223ADC"/></EntityType>
+			<Association Name="assoc_F7CAF941A5214AC573A85438EEAE48B4" sap:content-version="1"><End Type="cds_xmp4gxtransdocheader_sd.xMP4GxC_LinkedTransferDoc_UIType" Multiplicity="1"
+				Role="FromRole_assoc_F7CAF941A5214AC573A85438EEAE48B4"/><End Type="cds_xmp4gxtransdocheader_sd.xAPExC_TransferDocStatus_VHType" Multiplicity="0..1"
+				Role="ToRole_assoc_F7CAF941A5214AC573A85438EEAE48B4"/></Association>
+			<Association Name="assoc_76B79D5EBC6D66F95DF4A6F64A223ADC" sap:content-version="1"><End Type="cds_xmp4gxtransdocheader_sd.xMP4GxI_TransferDoc_UIType" Multiplicity="1" Role="FromRole_assoc_76B79D5EBC6D66F95DF4A6F64A223ADC"/><End Type="cds_xmp4gxtransdocheader_sd.xMP4GxC_LinkedTransferDoc_UIType" Multiplicity="*"
+				Role="ToRole_assoc_76B79D5EBC6D66F95DF4A6F64A223ADC"/></Association>
+			<Association Name="assoc_D74BD54BD5E53D20F59C7C7DCC5C57E3" sap:content-version="1"><End Type="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDoc_UIType" Multiplicity="1" Role="FromRole_assoc_D74BD54BD5E53D20F59C7C7DCC5C57E3"/><End Type="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDcDirection_VHType" Multiplicity="1"
+				Role="ToRole_assoc_D74BD54BD5E53D20F59C7C7DCC5C57E3"/></Association>
+			<Association Name="assoc_0761491BE0E5ACDE7392CC64728C649B" sap:content-version="1"><End Type="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDoc_UIType" Multiplicity="1" Role="FromRole_assoc_0761491BE0E5ACDE7392CC64728C649B"/><End Type="cds_xmp4gxtransdocheader_sd.xMP4GxC_LinkedTransferDoc_UIType" Multiplicity="*"
+				Role="ToRole_assoc_0761491BE0E5ACDE7392CC64728C649B"/></Association>
+			<Association Name="assoc_9B8CC9478EF82BA21BD1073247C11F57" sap:content-version="1"><End Type="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDoc_UIType" Multiplicity="1" Role="FromRole_assoc_9B8CC9478EF82BA21BD1073247C11F57"/><End Type="cds_xmp4gxtransdocheader_sd.xMP4GxC_TechMsgID_VHType" Multiplicity="1" Role="ToRole_assoc_9B8CC9478EF82BA21BD1073247C11F57"/></Association>
+			<Association Name="assoc_76ACBE1E0432565259C2CDD73D9A1E9B" sap:content-version="1"><End Type="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDoc_UIType" Multiplicity="1" Role="FromRole_assoc_76ACBE1E0432565259C2CDD73D9A1E9B"/><End Type="cds_xmp4gxtransdocheader_sd.xAPExC_TransferDocStatus_VHType" Multiplicity="1"
+				Role="ToRole_assoc_76ACBE1E0432565259C2CDD73D9A1E9B"/></Association>
+			<EntityContainer Name="cds_xmp4gxtransdocheader_sd_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true"
+				sap:supported-formats="atom json xlsx"><EntitySet Name="xAPExC_TransferDocStatus_VH" EntityType="cds_xmp4gxtransdocheader_sd.xAPExC_TransferDocStatus_VHType" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:content-version="1"/><EntitySet Name="xMP4GxC_LinkedTransferDoc_UI" EntityType="cds_xmp4gxtransdocheader_sd.xMP4GxC_LinkedTransferDoc_UIType"
+				sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/><EntitySet Name="xMP4GxC_TDStatus_VH" EntityType="cds_xmp4gxtransdocheader_sd.xMP4GxC_TDStatus_VHType" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/><EntitySet Name="xMP4GxC_TechMsgID_VH" EntityType="cds_xmp4gxtransdocheader_sd.xMP4GxC_TechMsgID_VHType" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/><EntitySet Name="xMP4GxC_TransferDcDirection_VH" EntityType="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDcDirection_VHType"
+				sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/><EntitySet Name="xMP4GxC_TransferDoc_UI" EntityType="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDoc_UIType" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:content-version="1"/><EntitySet Name="xMP4GxI_BusinessMessageID_VH" EntityType="cds_xmp4gxtransdocheader_sd.xMP4GxI_BusinessMessageID_VHType"
+				sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/><EntitySet Name="xMP4GxI_TransferDoc_UI" EntityType="cds_xmp4gxtransdocheader_sd.xMP4GxI_TransferDoc_UIType" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+				<AssociationSet Name="assoc_D74BD54BD5E53D20F59C7C7DCC5C57E3"
+					Association="cds_xmp4gxtransdocheader_sd.assoc_D74BD54BD5E53D20F59C7C7DCC5C57E3" sap:creatable="false" sap:updatable="false"
+					sap:deletable="false" sap:content-version="1"><End EntitySet="xMP4GxC_TransferDoc_UI" Role="FromRole_assoc_D74BD54BD5E53D20F59C7C7DCC5C57E3"/><End EntitySet="xMP4GxC_TransferDcDirection_VH" Role="ToRole_assoc_D74BD54BD5E53D20F59C7C7DCC5C57E3"/></AssociationSet>
+				<AssociationSet Name="assoc_F7CAF941A5214AC573A85438EEAE48B4"
+					Association="cds_xmp4gxtransdocheader_sd.assoc_F7CAF941A5214AC573A85438EEAE48B4" sap:creatable="false" sap:updatable="false"
+					sap:deletable="false" sap:content-version="1"><End EntitySet="xMP4GxC_LinkedTransferDoc_UI" Role="FromRole_assoc_F7CAF941A5214AC573A85438EEAE48B4"/><End EntitySet="xAPExC_TransferDocStatus_VH" Role="ToRole_assoc_F7CAF941A5214AC573A85438EEAE48B4"/></AssociationSet>
+				<AssociationSet Name="assoc_9B8CC9478EF82BA21BD1073247C11F57"
+					Association="cds_xmp4gxtransdocheader_sd.assoc_9B8CC9478EF82BA21BD1073247C11F57" sap:creatable="false" sap:updatable="false"
+					sap:deletable="false" sap:content-version="1"><End EntitySet="xMP4GxC_TransferDoc_UI" Role="FromRole_assoc_9B8CC9478EF82BA21BD1073247C11F57"/><End EntitySet="xMP4GxC_TechMsgID_VH" Role="ToRole_assoc_9B8CC9478EF82BA21BD1073247C11F57"/></AssociationSet>
+				<AssociationSet Name="assoc_76ACBE1E0432565259C2CDD73D9A1E9B"
+					Association="cds_xmp4gxtransdocheader_sd.assoc_76ACBE1E0432565259C2CDD73D9A1E9B" sap:creatable="false" sap:updatable="false"
+					sap:deletable="false" sap:content-version="1"><End EntitySet="xMP4GxC_TransferDoc_UI" Role="FromRole_assoc_76ACBE1E0432565259C2CDD73D9A1E9B"/><End EntitySet="xAPExC_TransferDocStatus_VH" Role="ToRole_assoc_76ACBE1E0432565259C2CDD73D9A1E9B"/></AssociationSet>
+				<AssociationSet Name="assoc_76B79D5EBC6D66F95DF4A6F64A223ADC"
+					Association="cds_xmp4gxtransdocheader_sd.assoc_76B79D5EBC6D66F95DF4A6F64A223ADC" sap:creatable="false" sap:updatable="false"
+					sap:deletable="false" sap:content-version="1"><End EntitySet="xMP4GxI_TransferDoc_UI" Role="FromRole_assoc_76B79D5EBC6D66F95DF4A6F64A223ADC"/><End EntitySet="xMP4GxC_LinkedTransferDoc_UI" Role="ToRole_assoc_76B79D5EBC6D66F95DF4A6F64A223ADC"/></AssociationSet>
+				<AssociationSet Name="assoc_0761491BE0E5ACDE7392CC64728C649B"
+					Association="cds_xmp4gxtransdocheader_sd.assoc_0761491BE0E5ACDE7392CC64728C649B" sap:creatable="false" sap:updatable="false"
+					sap:deletable="false" sap:content-version="1"><End EntitySet="xMP4GxC_TransferDoc_UI" Role="FromRole_assoc_0761491BE0E5ACDE7392CC64728C649B"/><End EntitySet="xMP4GxC_LinkedTransferDoc_UI" Role="ToRole_assoc_0761491BE0E5ACDE7392CC64728C649B"/></AssociationSet>
+			</EntityContainer>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDoc_UIType/Direction">
+				<Annotation Term="Common.ValueList">
+					<Record><PropertyValue Property="Label" String="Value Help: Transfer Document Direction"/><PropertyValue Property="CollectionPath" String="xMP4GxC_TransferDcDirection_VH"/><PropertyValue Property="SearchSupported" Bool="false"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut"><PropertyValue Property="LocalDataProperty" PropertyPath="Direction"/><PropertyValue Property="ValueListProperty" String="Value"/></Record>
+								<Record Type="Common.ValueListParameterDisplayOnly"><PropertyValue Property="ValueListProperty" String="Language"/></Record>
+								<Record Type="Common.ValueListParameterDisplayOnly"><PropertyValue Property="ValueListProperty" String="Description"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm"
+				Target="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDoc_UIType/ExtBusinessMessageID">
+				<Annotation Term="Common.ValueList">
+					<Record><PropertyValue Property="Label" String="Value Help: Business Message ID"/><PropertyValue Property="CollectionPath" String="xMP4GxI_BusinessMessageID_VH"/><PropertyValue Property="SearchSupported" Bool="true"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut"><PropertyValue Property="LocalDataProperty" PropertyPath="ExtBusinessMessageID"/><PropertyValue Property="ValueListProperty" String="ExtBusinessMessageID"/></Record>
+								<Record Type="Common.ValueListParameterDisplayOnly"><PropertyValue Property="ValueListProperty" String="BusinessMessageID"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDoc_UIType/TechnicalMsgID">
+				<Annotation Term="Common.ValueList">
+					<Record><PropertyValue Property="Label" String="Value Help: Business Message ID"/><PropertyValue Property="CollectionPath" String="xMP4GxC_TechMsgID_VH"/><PropertyValue Property="SearchSupported" Bool="true"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut"><PropertyValue Property="LocalDataProperty" PropertyPath="TechnicalMsgID"/><PropertyValue Property="ValueListProperty" String="TechnicalMsgID"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_xmp4gxtransdocheader_sd.xMP4GxC_TransferDoc_UIType/TDStatus">
+				<Annotation Term="Common.ValueList">
+					<Record><PropertyValue Property="Label" String="Value Help: Get Transfer status"/><PropertyValue Property="CollectionPath" String="xMP4GxC_TDStatus_VH"/><PropertyValue Property="SearchSupported" Bool="true"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut"><PropertyValue Property="LocalDataProperty" PropertyPath="TDStatus"/><PropertyValue Property="ValueListProperty" String="TDSTATUS"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation><Annotation Term="Common.ValueListWithFixedValues"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_xmp4gxtransdocheader_sd.cds_xmp4gxtransdocheader_sd_Entities">
+				<Annotation Term="Aggregation.ApplySupported">
+					<Record>
+						<PropertyValue Property="Transformations">
+							<Collection>
+								<String>aggregate</String>
+								<String>groupby</String>
+								<String>filter</String>
+							</Collection>
+						</PropertyValue><PropertyValue Property="Rollup" EnumMember="None"/></Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm"
+				Target="cds_xmp4gxtransdocheader_sd.cds_xmp4gxtransdocheader_sd_Entities/xMP4GxC_TransferDoc_UI">
+				<Annotation Term="Capabilities.FilterRestrictions">
+					<Record>
+						<PropertyValue Property="FilterExpressionRestrictions">
+							<Collection>
+								<Record><PropertyValue Property="Property" PropertyPath="TransferDate"/><PropertyValue Property="AllowedExpressions" String="SingleRange"/></Record>
+								<Record><PropertyValue Property="Property" PropertyPath="ExternalPayload"/><PropertyValue Property="AllowedExpressions" String="SearchExpression"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.SortRestrictions">
+					<Record>
+						<PropertyValue Property="NonSortableProperties">
+							<Collection>
+								<PropertyPath>ExternalPayload</PropertyPath>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm"
+				Target="cds_xmp4gxtransdocheader_sd.cds_xmp4gxtransdocheader_sd_Entities/xMP4GxI_BusinessMessageID_VH">
+				<Annotation Term="Capabilities.FilterRestrictions">
+					<Record>
+						<PropertyValue Property="NonFilterableProperties">
+							<Collection>
+								<PropertyPath>BusinessMessageID_fc</PropertyPath>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.SortRestrictions">
+					<Record>
+						<PropertyValue Property="NonSortableProperties">
+							<Collection>
+								<PropertyPath>BusinessMessageID_fc</PropertyPath>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm"
+				Target="cds_xmp4gxtransdocheader_sd.cds_xmp4gxtransdocheader_sd_Entities/xMP4GxI_TransferDoc_UI">
+				<Annotation Term="Capabilities.FilterRestrictions">
+					<Record>
+						<PropertyValue Property="FilterExpressionRestrictions">
+							<Collection>
+								<Record><PropertyValue Property="Property" PropertyPath="ExternalPayload"/><PropertyValue Property="AllowedExpressions" String="SearchExpression"/></Record>
+								<Record><PropertyValue Property="Property" PropertyPath="InternalPayload"/><PropertyValue Property="AllowedExpressions" String="SearchExpression"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.SortRestrictions">
+					<Record>
+						<PropertyValue Property="NonSortableProperties">
+							<Collection>
+								<PropertyPath>ExternalPayload</PropertyPath>
+								<PropertyPath>InternalPayload</PropertyPath>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./mp4g/TRANSDOCHEADER_SB/$metadata"/><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./mp4g/TRANSDOCHEADER_SB/$metadata"/></Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

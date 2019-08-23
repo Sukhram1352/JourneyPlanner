@@ -1,0 +1,26 @@
+sap.ui.define([
+	"journeyPlanner/JourneyPlanner/controller/BaseController",
+	"journeyPlanner/JourneyPlanner/model/formatter",
+	"sap/ui/model/json/JSONModel"
+], function (BaseController, formatter, JSONModel) {
+	"use strict";
+
+	return BaseController.extend("journeyPlanner.JourneyPlanner.controller.RealTimeJourneyPlanner", {
+		
+		formatter: formatter,
+
+		/* =========================================================== */
+		/* lifecycle methods                                           */
+		/* =========================================================== */
+
+		/**
+		 * Called when the worklist controller is instantiated.
+		 * @public
+		 */
+		onInit: function () {
+			var oRealTimeJourneyPlannerModel = new JSONModel();
+			oRealTimeJourneyPlannerModel.setProperty("/NewJourney", {});
+			this.getView().setModel(oRealTimeJourneyPlannerModel, "RealTimeJourneyPlanner");
+		}
+	});
+});

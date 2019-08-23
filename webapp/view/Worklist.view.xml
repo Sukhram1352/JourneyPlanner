@@ -1,0 +1,21 @@
+<mvc:View controllerName="journeyPlanner.JourneyPlanner.controller.Worklist" 
+    xmlns="sap.m" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:semantic="sap.m.semantic">
+	<Page title="Smart Journey Planner">
+		<content>
+			<GenericTile header="Real Time Journey Planner"
+			    class="sapUiLargeMarginBegin sapUiLargeMarginTop" 
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
+				press="onRealTimeTilePress" 
+				backgroundImage="">
+			</GenericTile>
+			<GenericTile header="Historical Journey Planner" 
+			    class="sapUiMediumMarginBegin sapUiLargeMarginTop" 
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
+				press="onHistoryTilePress" 
+				backgroundImage="">
+			</GenericTile>
+		</content>
+	</Page>
+</mvc:View>
