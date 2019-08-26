@@ -12,7 +12,7 @@
 		"resources": "resources.json",
 		"dataSources": {
 			"mainService": {
-				"uri": "/sap/opu/odata/MP4G/PROCESSHEADER_SB",
+				"uri": "/sap/opu/odata/sap/ZIOT_TEMP_DATA_ODATA_SERVICE_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",

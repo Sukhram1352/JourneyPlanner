@@ -40,10 +40,10 @@
       "path": "/sap/opu/odata",
       "target": {
         "type": "destination",
-        "name": "MUS_380",
+        "name": "SD4",
         "entryPath": "/sap/opu/odata"
       },
-      "description": "MUS_380"
+      "description": "SD4"
     }
   ]
 }

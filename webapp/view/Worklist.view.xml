@@ -5,16 +5,16 @@
 	<Page title="Smart Journey Planner">
 		<content>
 			<GenericTile header="Real Time Journey Planner"
-			    class="sapUiLargeMarginBegin sapUiLargeMarginTop" 
+			    class="sapUiLargeMarginBegin sapUiLargeMarginTop smartJourneyPlannerWorklistTiles" 
 				busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
 				press="onRealTimeTilePress" 
-				backgroundImage="">
+				backgroundImage="images/RealTimeCrowd.jpg">
 			</GenericTile>
 			<GenericTile header="Historical Journey Planner" 
-			    class="sapUiMediumMarginBegin sapUiLargeMarginTop" 
+			    class="sapUiMediumMarginBegin sapUiLargeMarginTop smartJourneyPlannerWorklistTiles" 
 				busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
 				press="onHistoryTilePress" 
-				backgroundImage="">
+				backgroundImage="images/HistoricalCrowd.jpg">
 			</GenericTile>
 		</content>
 	</Page>

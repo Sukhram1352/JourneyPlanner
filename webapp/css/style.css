@@ -1,0 +1,92 @@
+.smartJourneyPlannerWorklistTiles.sapMGT {
+	background-size: cover;
+	height: 12rem;
+	width: 12rem;
+}
+
+.smartJourneyPlannerWorklistTiles .sapMGTHdrTxt>.sapMText {
+	color: white;
+}
+
+.smartJourneyPlannerStationDropDowns .sapMInputBaseContentWrapper {
+    border-radius: 0.5rem;
+}
+
+.smartJourneyPlannerIconTabBar .sapMITBHead {
+	margin: 0rem;
+}
+
+.smartJourneyPlannerIconTabBar .sapMITH {
+	background-color: transparent;
+}
+
+.smartJourneyPlannerIconTabBar .sapMITBVertical.sapMITBFilter>.sapMITBText,
+.smartJourneyPlannerIconTabBar .sapMITBContentArrow {
+	background-color: transparent;
+}
+
+.smartJourneyPlannerIconTabBar.sapUiMedia-Std-Desktop .sapMITH.sapUiResponsiveContentPadding .sapMITBScrollContainer, 
+.smartJourneyPlannerIconTabBar.sapUiMedia-Std-Desktop .sapMITB.sapUiResponsiveContentPadding .sapMITBScrollContainer {
+	margin-left: 0;
+}
+
+.smartJourneyPlannerNormalFare.sapMFlexBoxWrapNoWrap {
+	border-style: groove;
+	align-items: center;
+	border-radius: 0.4rem;
+}
+
+.smartJourneyPlannerJourneyStation.sapMFlexBoxWrapNoWrap {
+	border-style: groove;
+	align-items: center;
+	border-radius: 0.7rem;
+	margin-right: 0.2rem;
+}
+
+.smartJourneyPlannerNormalFareColor.sapMFlexBoxWrapNoWrap {
+	background-color: lime;
+}
+
+.smartJourneyPlannerTimeColor.sapMFlexBoxWrapNoWrap {
+	background-color: gainsboro;
+}
+
+.smartJourneyPlannerConcessionalFareColor.sapMFlexBoxWrapNoWrap {
+	background-color: orange;
+}
+
+.smartJourneyPlannerNormalFareText.sapMText {
+	font-size: 1.1rem;
+}
+
+.smartJourneyPlannerNormalFareDescription.sapMText {
+	font-size: 0.7rem;
+}
+
+.smartJourneyPlannerJourneyStationGreenLine.sapMFlexBoxWrapNoWrap {
+	background-color: lime;
+}
+
+.smartJourneyPlannerJourneyStationRedLine.sapMFlexBoxWrapNoWrap {
+	background-color: red;
+}
+
+.smartJourneyPlannerJourneyStationYellowLine.sapMFlexBoxWrapNoWrap {
+	background-color: yellow;
+}
+
+.smartJourneyPlannerJourneyStationPinkLine.sapMFlexBoxWrapNoWrap {
+	background-color: hotpink;
+}
+
+.smartJourneyPlannerJourneyStationBlueLine.sapMFlexBoxWrapNoWrap {
+	background-color: deepskyblue;
+}
+
+.smartJourneyPlannerJourneyStationOrangeLine.sapMFlexBoxWrapNoWrap {
+	background-color: orange;
+}
+
+.smartJourneyPlannerJourneyInterChangeStation.sapMText {
+	color: red;
+}
