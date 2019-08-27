@@ -37,6 +37,18 @@
 					</VBox>
 					<Button text="Submit" type="Emphasized" press="onPressSubmitButton"></Button>
 				</HBox>
+				<!--<HBox>-->
+					<!--<VBox width="100%">-->
+						<!--<TextArea id="idGoogleMapTrial" cols="50"></TextArea>-->
+					<!--	<ComboBox id="idGoogleMapTrial" class="smartJourneyPlannerStationDropDowns"-->
+					<!--			items="{path: 'RealTimeJourneyPlanner>/MetroStations', sorter: { path: 'StationName' }}"-->
+					<!--			selectedKey="{RealTimeJourneyPlanner>/NewJourney/FromStation}" width="100%"-->
+					<!--			placeholder="From" required="true" change="onFromStationSelectionChange">-->
+					<!--		<core:Item key="{RealTimeJourneyPlanner>StationName}" -->
+					<!--				text="{RealTimeJourneyPlanner>StationName}" />-->
+					<!--	</ComboBox>-->
+					<!--</VBox>-->
+				<!--</HBox>-->
 				<IconTabBar upperCase="false" expanded="{device>/isNoPhone}"
 					class="sapUiResponsiveContentPadding sapUiSmallMarginBottom smartJourneyPlannerIconTabBar"
 					select="onChangeJourneyRouteTab" items="{RealTimeJourneyPlanner>/JourneyRoutes}">
@@ -53,22 +65,24 @@
 														<Text text="{i18n>NORMAL_FARE_TEXT}" 
 															class="sapUiTinyMarginBegin sapUiSmallMarginEnd sapUiTinyMarginTop smartJourneyPlannerNormalFareText"></Text>
 													</HBox>
-													<VBox class="smartJourneyPlannerNormalFare smartJourneyPlannerConcessionalFareColor" height="3.8rem">
-														<Text text="{i18n>CONCESSIONAL_FARE_TEXT}" 
-															class="sapUiTinyMarginBegin sapUiSmallMarginEnd sapUiTinyMarginTop smartJourneyPlannerNormalFareText"></Text>
-														<Text text="{i18n>CONCESSIONAL_FARE_DESC_TEXT}" 
-															class="sapUiTinyMarginBegin sapUiSmallMarginEnd sapUiTinyMarginBottom smartJourneyPlannerNormalFareDescription"></Text>
-													</VBox>
+													<HBox class="smartJourneyPlannerNormalFare smartJourneyPlannerConcessionalFareColor" height="3.8rem">
+														<VBox>
+															<Text text="{i18n>CONCESSIONAL_FARE_TEXT}" 
+																class="sapUiTinyMarginBegin sapUiSmallMarginEnd sapUiTinyMarginTop smartJourneyPlannerNormalFareText"></Text>
+															<Text text="{i18n>CONCESSIONAL_FARE_DESC_TEXT}" 
+																class="sapUiTinyMarginBegin sapUiSmallMarginEnd sapUiTinyMarginBottom smartJourneyPlannerNormalFareDescription"></Text>
+														</VBox>
+													</HBox>
 												</VBox>
 												<VBox width="25%">
 													<HBox class="smartJourneyPlannerNormalFare smartJourneyPlannerNormalFareColor" height="3.8rem">
 														<Text text="{RealTimeJourneyPlanner>NormalFare}" 
 															class="sapUiTinyMarginBegin sapUiSmallMarginEnd sapUiTinyMarginTop smartJourneyPlannerNormalFareText"></Text>
 													</HBox>
-													<VBox class="smartJourneyPlannerNormalFare smartJourneyPlannerConcessionalFareColor" height="3.8rem">
+													<HBox class="smartJourneyPlannerNormalFare smartJourneyPlannerConcessionalFareColor" height="3.8rem">
 														<Text text="{RealTimeJourneyPlanner>ConcessionalFare}" 
 															class="sapUiTinyMarginBegin sapUiSmallMarginEnd sapUiTinyMarginTop smartJourneyPlannerNormalFareText"></Text>
-													</VBox>
+													</HBox>
 												</VBox>
 											</HBox>
 											<VBox width="20%" class="sapUiTinyMarginBegin smartJourneyPlannerNormalFare smartJourneyPlannerTimeColor">
@@ -209,14 +223,13 @@
 											</items>
 										</HBox>
 									</VBox>
-									<VBox id="map_canvas" fitContainer="true" justifyContent="Center"
-										alignItems="Center" width="100%" height="100%">
-									</VBox>
 								</VBox>
 							</content>
 						</IconTabFilter>
 					</items>
 				</IconTabBar>
+				<VBox height="35rem" id="idGoogleMapTrial">
+				</VBox>
 			</VBox>
 		</semantic:content>
 	</semantic:FullscreenPage>

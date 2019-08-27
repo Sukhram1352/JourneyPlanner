@@ -12,7 +12,5 @@ sap.ui.define([
 		onLinkPressed : function () {
 			this.getRouter().navTo("worklist");
 		}
-
 	});
-
 });

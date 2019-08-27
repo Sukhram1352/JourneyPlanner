@@ -90,3 +90,7 @@
 .smartJourneyPlannerJourneyInterChangeStation.sapMText {
 	color: red;
 }
+
+.smartJourneyPlannerJourneyGoogleMap.sapMInputBase {
+	height: 25rem;
+}

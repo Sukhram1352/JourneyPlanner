@@ -16,6 +16,8 @@
 			data-sap-ui-resourceroots='{"journeyPlanner.JourneyPlanner": "."}'
 			data-sap-ui-frameOptions="trusted">
 	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDO0tforeoxCt8ar7pOAYUFRTiU_bQO8fw"
+          type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 	<script>
 		sap.ui.getCore().attachInit(function () {
@@ -37,22 +39,10 @@
 			});
 		});
 	</script>
-	
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5EYh6x5DjO4KbA6hfnCPQifvbkZ0-0bE&libraries=places"
-		type ="text/javascript">
-	</script>
-	
-	<style>
-		.myMap {                   
-			height: 100%;
-			width: 100%;
-		}
-	</style>
-
 </head>
 
 <!-- UI Content -->
 <body class="sapUiBody" id="content">
 </body>
+
 </html>

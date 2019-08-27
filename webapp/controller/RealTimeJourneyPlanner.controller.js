@@ -22,72 +22,33 @@ sap.ui.define([
 		onInit: function () {
 			var oRealTimeJourneyPlannerModel = new RealTimeJourneyPlannerModel();
 			this.getView().setModel(oRealTimeJourneyPlannerModel, "RealTimeJourneyPlanner");
-			
-			this.getView().byId("map_canvas").addStyleClass("myMap");
-			
-			window.addEventListener('load', function() { 
-				var script = document.createElement('script'); 
-				script.type = 'text/javascript'; 
-				script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&avoid=TOLLS&libraries=places&callback=initMap'; 
-				document.body.appendChild(script); 
-				
-			}); 
-			
-			function initMap() { 
-				var directionsRenderer = new google.maps.DirectionsRenderer({ map: map }); 
-				var directionsService = new google.maps.DirectionsService; 
-				var map = new google.maps.Map(document.getElementById('map'), { 
-					zoom: 6, 
-					center: { 
-						lat: 23.0225, 
-						lng: 72.5714 
-					} 
-				}); 
-				
-			    directionsRenderer.setMap(map); 
-			    directionsRenderer.setPanel(document.getElementById('left-div')); 
-			    
-			    var control = document.getElementById('front-div'); 
-			    control.style.display = 'inline'; 
-			    map.controls[google.maps.ControlPosition.TOP_CENTER].push(control); 
-			    
-			    document.getElementById('origin').addEventListener('change', function() { 
-			    	distanceCalculator(directionsService, directionsRenderer); 
-			    }, false); 
-			    
-			    document.getElementById('destination').addEventListener('click', function() { 
-			    	distanceCalculator(directionsService, directionsRenderer); 
-			    }, false); } 
-			    
-			    function distanceCalculator(directionsService, directionsRenderer) { 
-			    	var origin = document.getElementById('origin').value; 
-			    	var destination = document.getElementById('destination').value; 
-			    	var req = { origin: origin, destination: destination, travelMode: 'DRIVING' }; 
-			    	directionsService.route(req, function(response, status) { 
-			    		if (status === 'OK') { 
-			    			directionsRenderer.setDirections(response); 
-			    		} 
-			    	}); 
-			    }
 		},
 		
 		onAfterRendering: function() {
-			// if (!this.initialized) {
-			// 	this.initialized = true;
-			// 	this.geocoder = new google.maps.Geocoder();
-			// 	window.mapOptions = {                          
-			// 		center: new google.maps.LatLng(-34.397, 150.644),
-			// 		zoom: 8,
-			// 		mapTypeId: google.maps.MapTypeId.ROADMAP
-			// 	}; 
-				
-			// 	var map = new google.maps.Map(this.getView().byId("map_canvas").getDomRef(), mapOptions);
-			// 	var infowindow = new google.maps.InfoWindow;
-			// 	var geocoder = new google.maps.Geocoder();
-			// 	var marker = new google.maps.Marker({
-			// 		map: map,
-			// 	});
-			// }
+			// this.geocoder = new google.maps.Geocoder();
+			// window.mapOptions = {                          
+			// 	center: new google.maps.LatLng(28.644800, 	77.216721),
+			// 	zoom: 13,
+			// 	mapTypeId: google.maps.MapTypeId.ROADMAP
+			// }; 
+			
+			// var map = new google.maps.Map(this.getView().byId("idGoogleMapTrial").getDomRef(), mapOptions);
+			// var infowindow = new google.maps.InfoWindow;
+			// var geocoder = new google.maps.Geocoder();
+			// var marker = new google.maps.Marker({
+			// 	map: map,
+			// });
+			
+		var myOptions = {zoom:12,
+		                 center:new google.maps.LatLng(20,77),
+		                 mapTypeId: google.maps.MapTypeId.ROADMAP
+		                 };
+		var map = new google.maps.Map(this.getView().byId("idGoogleMapTrial").getDomRef(), myOptions);
+		var marker = new google.maps.Marker({map: map,
+				position: new google.maps.LatLng(20,77)
+			});
+		var infowindow = new google.maps.InfoWindow({content:'<strong></strong><br>SAP Labs India, Vatika tower, Tower A, 4th floor,, Golf Course Road, Sector-54,<br>122002 GURUGRAM<br>'});
+		infowindow.open(map,marker);
 		},
 		
 		/**
