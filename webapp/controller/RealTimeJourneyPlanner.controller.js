@@ -203,13 +203,9 @@ sap.ui.define([
 				aStationCriticality = [];
 				aVariableStations = [];
 				
-				// oJourneyRouteEmptyStructure.Route = (Number(aJourneyRoutes[intI].OptionId) === 1) ? 
-				// 	"Preferred Route" : "Optional Route " + aJourneyRoutes[intI].OptionId;
-				// oJourneyRouteEmptyStructure.RouteId = "IconTabItem" + aJourneyRoutes[intI].OptionId;
-				
-				oJourneyRouteEmptyStructure.Route = (intI === 0) ? 
-					"Preferred Route" : "Optional Route " + (intI + 1);
-				oJourneyRouteEmptyStructure.RouteId = "IconTabItem" + (intI + 1);
+				oJourneyRouteEmptyStructure.Route = (Number(aJourneyRoutes[intI].OptionId) === 1) ? 
+					"Preferred Route" : "Optional Route " + aJourneyRoutes[intI].OptionId;
+				oJourneyRouteEmptyStructure.RouteId = "IconTabItem" + aJourneyRoutes[intI].OptionId;
 				
 				oJourneyRouteEmptyStructure.JourneyTime = Number(aJourneyRoutes[intI].Total) + " Min";
 				oJourneyRouteEmptyStructure.NormalFare = "₹ " + Number(aJourneyRoutes[intI].Fare);
