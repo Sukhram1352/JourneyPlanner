@@ -106,7 +106,7 @@
 									</VBox>
 									<VBox class="sapUiMediumMarginTop">
 										<Text text="Journey Route" class="smartJourneyPlannerJourneyRoute sapUiTinyMarginBottom"></Text>
-										<VBox class="smartJourneyPlannerJourneyRouteVBox">
+										<VBox>
 											<HBox items="{RealTimeJourneyPlanner>Stations}" wrap="Wrap">
 												<items>
 													<VBox>
@@ -231,7 +231,7 @@
 										<VBox>
 											<Text text="Station Criticality" class="smartJourneyPlannerJourneyRoute sapUiTinyMarginBottom"></Text>
 										</VBox>
-										<VBox class="smartJourneyPlannerJourneyRouteVBox">
+										<VBox>
 											<HBox items="{RealTimeJourneyPlanner>VariableStations}" wrap="Wrap">
 												<items>
 													<VBox class="sapUiMediumMarginEnd sapUiSmallMarginTop">

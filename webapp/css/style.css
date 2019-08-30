@@ -51,7 +51,7 @@
 }
 
 .smartJourneyPlannerNormalFareColor.sapMFlexBoxWrapNoWrap {
-	background-color: lime;
+	background-color: #66FF66;
 }
 
 .smartJourneyPlannerTimeColor.sapMFlexBoxWrapNoWrap {
@@ -71,35 +71,35 @@
 }
 
 .smartJourneyPlannerJourneyStationGreenLine.sapMFlexBoxWrapNoWrap {
-	background-color: lime;
+	background-color: #66FF66;
 }
 
 .smartJourneyPlannerJourneyStationRedLine.sapMFlexBoxWrapNoWrap {
-	background-color: red;
+	background-color: #FF6666;
 }
 
 .smartJourneyPlannerJourneyStationYellowLine.sapMFlexBoxWrapNoWrap {
-	background-color: yellow;
+	background-color: 	#FFFF00;
 }
 
 .smartJourneyPlannerJourneyStationPinkLine.sapMFlexBoxWrapNoWrap {
-	background-color: hotpink;
+	background-color: #FFB6C1;
 }
 
 .smartJourneyPlannerJourneyStationBlueLine.sapMFlexBoxWrapNoWrap {
-	background-color: deepskyblue;
+	background-color: #9999FF;
 }
 
 .smartJourneyPlannerJourneyStationOrangeLine.sapMFlexBoxWrapNoWrap {
-	background-color: orange;
+	background-color: #FFA500;
 }
 
 .smartJourneyPlannerJourneyInterChangeStation.sapMText {
-	color: red;
+	color: #FF6666;
 }
 
 .smartJourneyPlannerJourneyStationVioletLine.sapMFlexBoxWrapNoWrap {
-	background-color: darkviolet;
+	background-color: #B57EDC;
 }
 
 .smartJourneyPlannerJourneyGoogleMap.sapMInputBase {
@@ -113,4 +113,9 @@
 
 .smartJourneyPlannerJourneyRoute.sapMText {
 	font-size: 1.2rem;
+}
+
+.smartJourneyPlannerIconTabBar .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected>.sapMITBText {
+    font-weight: bold;
+    font-size: medium;
 }
