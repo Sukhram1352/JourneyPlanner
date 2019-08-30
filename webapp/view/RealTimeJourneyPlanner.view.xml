@@ -5,7 +5,7 @@
 	xmlns:t="sap.ui.table" 
 	xmlns:l="sap.ui.layout" 
 	xmlns:fb="sap.ui.comp.filterbar" 
-	xmlns:sm="sap.ui.comp.smartmicrochart"
+	xmlns:sm="sap.ui.comp.smartmicrochart" 
 	xmlns:mc="sap.suite.ui.microchart" 
 	xmlns:viz="sap.viz.ui5.controls" 
 	xmlns:viz.data="sap.viz.ui5.data" 

@@ -83,26 +83,34 @@ sap.ui.define([
 			this.validateStationDropDowns("Both");
 			
 			if(this.checkStationsValidity()) {
-				var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-				var oNewJourney = jQuery.extend(true, {}, oRealTimeJourneyPlannerModel.getProperty("/NewJourneyClientCopy"));
-				var oFilter;
-				var aFilters = [];
-				
-				aFilters.push(new Filter("SFrom", FilterOperator.EQ, oNewJourney.SFrom));
-				aFilters.push(new Filter("STo", FilterOperator.EQ, oNewJourney.STo));
-				oFilter = [new Filter(aFilters, true)];
-				
-				this.getOwnerComponent().getModel().read("/NRouteReqSet", {
-					success: function(oData) {
-						var aJourneyRoutes = Utility.sanitizeEntitySetResult(oData, false);
-						this.modifyJourneyRoutesData(aJourneyRoutes);
-					}.bind(this),
-					error: function(oError) {
-						this._oErrorHandler._showServiceError(oError);
-					}.bind(this),
-					filters: oFilter
-				});
+				this.getJourneyRoutesData();
 			}
+		},
+		
+		/**
+		 * Function to get Journey Routes 
+		 * @public
+		 */
+		getJourneyRoutesData: function() {
+			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
+			var oNewJourney = jQuery.extend(true, {}, oRealTimeJourneyPlannerModel.getProperty("/NewJourneyClientCopy"));
+			var oFilter;
+			var aFilters = [];
+			
+			aFilters.push(new Filter("SFrom", FilterOperator.EQ, oNewJourney.SFrom));
+			aFilters.push(new Filter("STo", FilterOperator.EQ, oNewJourney.STo));
+			oFilter = [new Filter(aFilters, true)];
+			
+			this.getOwnerComponent().getModel().read("/NRouteReqSet", {
+				success: function(oData) {
+					var aJourneyRoutes = Utility.sanitizeEntitySetResult(oData, false);
+					this.modifyJourneyRoutesData(aJourneyRoutes);
+				}.bind(this),
+				error: function(oError) {
+					this._oErrorHandler._showServiceError(oError);
+				}.bind(this),
+				filters: oFilter
+			});
 		},
 		
 		/**
@@ -273,6 +281,13 @@ sap.ui.define([
 			}
 			
 			oRealTimeJourneyPlannerModel.setProperty("/JourneyRoutes", jQuery.extend(true, [], aModifiedJourneyRoutes));
+		},
+		
+		refreshRealTimeJourneyData: function() {
+			var self = this;
+				this.intervalHandle = setInterval(function() { 
+				  self.getJourneyRoutesData();
+			},  120000);
 		}
 	});
 });
