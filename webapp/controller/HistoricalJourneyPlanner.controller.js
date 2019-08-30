@@ -19,7 +19,6 @@ sap.ui.define([
 		 */
 		onInit: function () {
 			var oHistoricalJourneyPlannerModel = new JSONModel();
-			oHistoricalJourneyPlannerModel.setProperty("/NewJourney", {});
 			this.getView().setModel(oHistoricalJourneyPlannerModel, "HistoricalJourneyPlanner");
 		}
 	});

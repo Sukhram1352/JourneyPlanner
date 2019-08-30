@@ -43,6 +43,13 @@
 	margin-right: 0.2rem;
 }
 
+.smartJourneyPlannerJourneyRouteVBox.sapMFlexBoxWrapNoWrap {
+	border-style: groove;
+	align-items: start;
+	border-radius: 0.7rem;
+	margin-right: 0.2rem;
+}
+
 .smartJourneyPlannerNormalFareColor.sapMFlexBoxWrapNoWrap {
 	background-color: lime;
 }
@@ -91,6 +98,19 @@
 	color: red;
 }
 
+.smartJourneyPlannerJourneyStationVioletLine.sapMFlexBoxWrapNoWrap {
+	background-color: darkviolet;
+}
+
 .smartJourneyPlannerJourneyGoogleMap.sapMInputBase {
 	height: 25rem;
+}
+
+.smartJourneyPlannerJourneyEmptyVBox.sapMText {
+	font-size: 1.2rem;
+	color: red;
+}
+
+.smartJourneyPlannerJourneyRoute.sapMText {
+	font-size: 1.2rem;
 }

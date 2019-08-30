@@ -27,38 +27,8 @@ sap.ui.define([
 		 */
 		_setInitialModelStructure: function() {
 			this._oClientData = {
-				MetroStations: [{
-					"StationName": "Adarsh Nagar"
-				},{
-					"StationName": "Barakhambha Road"
-				},{
-					"StationName": "Central Secretariat"
-				},{
-					"StationName": "Chandni Chowk"
-				},{
-					"StationName": "Chawri Bazar"
-				},{
-					"StationName": "Delhi Cantonment"
-				},{
-					"StationName": "Hazrat Nizamuddin"
-				},{
-					"StationName": "Indira Gandhi International Airport"
-				},{
-					"StationName": "Indraprastha"
-				},{
-					"StationName": "IP Extension"
-				},{
-					"StationName": "Jhandewalan"
-				},{
-					"StationName": "Kashmere Gate"
-				},{
-					"StationName": "IP Extension"
-				},{
-					"StationName": "Mansarovar Park"
-				},{
-					"StationName": "Qutab Minar"
-				}],
-				NewJourney: {}
+				NewJourneyClientCopy: {},
+				NewJourneyServerCopy: {}
 			};
 		}
 	});

@@ -12,7 +12,7 @@
 		"resources": "resources.json",
 		"dataSources": {
 			"mainService": {
-				"uri": "/sap/opu/odata/sap/ZIOT_TEMP_DATA_ODATA_SERVICE_SRV/",
+				"uri": "/sap/opu/odata/sap/ZMAP_ROUTE_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",

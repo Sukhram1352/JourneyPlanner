@@ -19,39 +19,26 @@
 				<HBox>
 					<VBox width="20%">
 						<ComboBox id="idFromStationDropDown" class="smartJourneyPlannerStationDropDowns"
-								items="{path: 'RealTimeJourneyPlanner>/MetroStations', sorter: { path: 'StationName' }}"
-								selectedKey="{RealTimeJourneyPlanner>/NewJourney/FromStation}" width="100%"
+								items="{path: 'RealTimeJourneyPlanner>/MetroStations', sorter: { path: 'Station_Name' }}"
+								selectedKey="{RealTimeJourneyPlanner>/NewJourneyClientCopy/SFrom}" width="100%"
 								placeholder="From" required="true" change="onFromStationSelectionChange">
-							<core:Item key="{RealTimeJourneyPlanner>StationName}" 
-									text="{RealTimeJourneyPlanner>StationName}" />
+							<core:Item key="{RealTimeJourneyPlanner>Station_Name}" text="{RealTimeJourneyPlanner>Station_Name}" />
 						</ComboBox>
 					</VBox>
 					<VBox width="20%" class="sapUiTinyMarginBeginEnd">
 						<ComboBox id="idToStationDropDown" class="smartJourneyPlannerStationDropDowns"
-								items="{path: 'RealTimeJourneyPlanner>/MetroStations', sorter: { path: 'StationName' }}"
-								selectedKey="{RealTimeJourneyPlanner>/NewJourney/ToStation}" width="100%"
+								items="{path: 'RealTimeJourneyPlanner>/MetroStations', sorter: { path: 'Station_Name' }}"
+								selectedKey="{RealTimeJourneyPlanner>/NewJourneyClientCopy/STo}" width="100%"
 								placeholder="To" required="true" change="onToStationSelectionChange">
-							<core:Item key="{RealTimeJourneyPlanner>StationName}" 
-									text="{RealTimeJourneyPlanner>StationName}" />
+							<core:Item key="{RealTimeJourneyPlanner>Station_Name}" text="{RealTimeJourneyPlanner>Station_Name}" />
 						</ComboBox>
 					</VBox>
 					<Button text="Submit" type="Emphasized" press="onPressSubmitButton"></Button>
 				</HBox>
-				<!--<HBox>-->
-					<!--<VBox width="100%">-->
-						<!--<TextArea id="idGoogleMapTrial" cols="50"></TextArea>-->
-					<!--	<ComboBox id="idGoogleMapTrial" class="smartJourneyPlannerStationDropDowns"-->
-					<!--			items="{path: 'RealTimeJourneyPlanner>/MetroStations', sorter: { path: 'StationName' }}"-->
-					<!--			selectedKey="{RealTimeJourneyPlanner>/NewJourney/FromStation}" width="100%"-->
-					<!--			placeholder="From" required="true" change="onFromStationSelectionChange">-->
-					<!--		<core:Item key="{RealTimeJourneyPlanner>StationName}" -->
-					<!--				text="{RealTimeJourneyPlanner>StationName}" />-->
-					<!--	</ComboBox>-->
-					<!--</VBox>-->
-				<!--</HBox>-->
 				<IconTabBar upperCase="false" expanded="{device>/isNoPhone}"
 					class="sapUiResponsiveContentPadding sapUiSmallMarginBottom smartJourneyPlannerIconTabBar"
-					select="onChangeJourneyRouteTab" items="{RealTimeJourneyPlanner>/JourneyRoutes}">
+					select="onChangeJourneyRouteTab" items="{RealTimeJourneyPlanner>/JourneyRoutes}" 
+					visible="{= (${RealTimeJourneyPlanner>/NewJourneyServerCopy/SFrom} !== '' &amp;&amp; ${RealTimeJourneyPlanner>/NewJourneyServerCopy/SFrom} !== '')}">
 					<items>
 						<IconTabFilter text="{RealTimeJourneyPlanner>Route}" 
 							key="{RealTimeJourneyPlanner>RouteKey}">
@@ -118,117 +105,193 @@
 										</HBox>
 									</VBox>
 									<VBox class="sapUiMediumMarginTop">
-										<HBox items="{RealTimeJourneyPlanner>Stations}" wrap="Wrap">
-											<items>
-												<VBox>
-													<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationGreenLine" 
-														visible="{= ${RealTimeJourneyPlanner>MetroLine} === 'Green'}">
-														<Text text="{RealTimeJourneyPlanner>StationName}" 
-															class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
-															visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
-														<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+										<Text text="Journey Route" class="smartJourneyPlannerJourneyRoute sapUiTinyMarginBottom"></Text>
+										<VBox class="smartJourneyPlannerJourneyRouteVBox">
+											<HBox items="{RealTimeJourneyPlanner>Stations}" wrap="Wrap">
+												<items>
+													<VBox>
+														<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationGreenLine" 
+															visible="{= (${RealTimeJourneyPlanner>MetroLine} === 'GREEN' || ${RealTimeJourneyPlanner>MetroLine} === 'Green')}">
 															<Text text="{RealTimeJourneyPlanner>StationName}" 
-																class="sapUiTinyMarginBeginEnd"/>
-															<Text text="(Change Here)" 
-																class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
-														</VBox>
-														<core:Icon src="sap-icon://arrow-right" 
-															class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
-													</HBox>
-													<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationRedLine" 
-														visible="{= ${RealTimeJourneyPlanner>MetroLine} === 'Red'}">
-														<Text text="{RealTimeJourneyPlanner>StationName}" 
-															class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
-															visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
-														<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+														<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationVioletLine" 
+															visible="{= (${RealTimeJourneyPlanner>MetroLine} === 'VIOLET' || ${RealTimeJourneyPlanner>MetroLine} === 'Violet')}">
 															<Text text="{RealTimeJourneyPlanner>StationName}" 
-																class="sapUiTinyMarginBeginEnd"/>
-															<Text text="(Change Here)" 
-																class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
-														</VBox>
-														<core:Icon src="sap-icon://arrow-right" 
-															class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
-													</HBox>
-													<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationYellowLine" 
-														visible="{= ${RealTimeJourneyPlanner>MetroLine} === 'Yellow'}">
-														<Text text="{RealTimeJourneyPlanner>StationName}" 
-															class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
-															visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
-														<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+														<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationRedLine" 
+															visible="{= (${RealTimeJourneyPlanner>MetroLine} === 'RED' || ${RealTimeJourneyPlanner>MetroLine} === 'Red')}">
 															<Text text="{RealTimeJourneyPlanner>StationName}" 
-																class="sapUiTinyMarginBeginEnd"/>
-															<Text text="(Change Here)" 
-																class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
-														</VBox>
-														<core:Icon src="sap-icon://arrow-right" 
-															class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
-													</HBox>
-													<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationPinkLine" 
-														visible="{= ${RealTimeJourneyPlanner>MetroLine} === 'Pink'}">
-														<Text text="{RealTimeJourneyPlanner>StationName}" 
-															class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
-															visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
-														<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+														<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationYellowLine" 
+															visible="{= (${RealTimeJourneyPlanner>MetroLine} === 'YELLOW' || ${RealTimeJourneyPlanner>MetroLine} === 'Yellow')}">
 															<Text text="{RealTimeJourneyPlanner>StationName}" 
-																class="sapUiTinyMarginBeginEnd"/>
-															<Text text="(Change Here)" 
-																class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
-														</VBox>
-														<core:Icon src="sap-icon://arrow-right" 
-															class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
-													</HBox>
-													<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationBlueLine" 
-														visible="{= ${RealTimeJourneyPlanner>MetroLine} === 'Blue'}">
-														<Text text="{RealTimeJourneyPlanner>StationName}" 
-															class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
-															visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
-														<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+														<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationPinkLine" 
+															visible="{= (${RealTimeJourneyPlanner>MetroLine} === 'PINK' || ${RealTimeJourneyPlanner>MetroLine} === 'Pink')}">
 															<Text text="{RealTimeJourneyPlanner>StationName}" 
-																class="sapUiTinyMarginBeginEnd"/>
-															<Text text="(Change Here)" 
-																class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
-														</VBox>
-														<core:Icon src="sap-icon://arrow-right" 
-															class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
-													</HBox>
-													<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationOrangeLine" 
-														visible="{= ${RealTimeJourneyPlanner>MetroLine} === 'Orange'}">
-														<Text text="{RealTimeJourneyPlanner>StationName}" 
-															class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
-															visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
-														<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+														<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationBlueLine" 
+															visible="{= (${RealTimeJourneyPlanner>MetroLine} === 'BLUE' || ${RealTimeJourneyPlanner>MetroLine} === 'Blue')}">
 															<Text text="{RealTimeJourneyPlanner>StationName}" 
-																class="sapUiTinyMarginBeginEnd"/>
-															<Text text="(Change Here)" 
-																class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
-														</VBox>
-														<core:Icon src="sap-icon://arrow-right" 
-															class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
-													</HBox>
-													<HBox class="smartJourneyPlannerJourneyStation" 
-														visible="{= ${RealTimeJourneyPlanner>MetroLine} === ''}">
-														<Text text="{RealTimeJourneyPlanner>StationName}" 
-															class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
-															visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
-														<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+														<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationOrangeLine" 
+															visible="{= (${RealTimeJourneyPlanner>MetroLine} === 'ORANGE' || ${RealTimeJourneyPlanner>MetroLine} === 'Orange')}">
 															<Text text="{RealTimeJourneyPlanner>StationName}" 
-																class="sapUiTinyMarginBeginEnd"/>
-															<Text text="(Change Here)" 
-																class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
-														</VBox>
-														<core:Icon src="sap-icon://arrow-right" 
-															class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
-													</HBox>
-												</VBox>
-											</items>
-										</HBox>
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+														<HBox class="smartJourneyPlannerJourneyStation" 
+															visible="{= ${RealTimeJourneyPlanner>MetroLine} === ''}">
+															<Text text="{RealTimeJourneyPlanner>StationName}" 
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+													</VBox>
+												</items>
+											</HBox>
+										</VBox>
+									</VBox>
+									<VBox class="sapUiMediumMarginTop">
+										<Text text="Station Criticality" class="smartJourneyPlannerJourneyRoute sapUiTinyMarginBottom"></Text>
+										<VBox class="smartJourneyPlannerJourneyRouteVBox">
+											<HBox items="{RealTimeJourneyPlanner>VariableStations}" wrap="Wrap">
+												<items>
+													<VBox>
+														<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationGreenLine" 
+															visible="{= (${RealTimeJourneyPlanner>Criticality} === 'GREEN' || ${RealTimeJourneyPlanner>Criticality} === 'Green')}">
+															<Text text="{RealTimeJourneyPlanner>StationName}" 
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+														<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationRedLine" 
+															visible="{= (${RealTimeJourneyPlanner>Criticality} === 'RED' || ${RealTimeJourneyPlanner>Criticality} === 'Red')}">
+															<Text text="{RealTimeJourneyPlanner>StationName}" 
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+														<HBox class="smartJourneyPlannerJourneyStation smartJourneyPlannerJourneyStationYellowLine" 
+															visible="{= (${RealTimeJourneyPlanner>Criticality} === 'YELLOW' || ${RealTimeJourneyPlanner>Criticality} === 'Yellow')}">
+															<Text text="{RealTimeJourneyPlanner>StationName}" 
+																class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom"
+																visible="{= !${RealTimeJourneyPlanner>InterChangeStation}}"/>
+															<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
+																<Text text="{RealTimeJourneyPlanner>StationName}" 
+																	class="sapUiTinyMarginBeginEnd"/>
+																<Text text="(Change Here)" 
+																	class="sapUiTinyMarginBeginEnd smartJourneyPlannerJourneyInterChangeStation"/>
+															</VBox>
+															<core:Icon src="sap-icon://arrow-right" 
+																class="sapUiSmallMarginTopBottom sapUiTinyMarginEnd"/>
+														</HBox>
+													</VBox>
+												</items>
+											</HBox>
+										</VBox>
 									</VBox>
 								</VBox>
 							</content>
 						</IconTabFilter>
 					</items>
 				</IconTabBar>
-				<VBox height="35rem" id="idGoogleMapTrial">
+				<VBox height="6rem" class="sapUiSmallMarginTopBottom sapUiMediumMarginEnd smartJourneyPlannerJourneyStation"
+					visible="{= (${RealTimeJourneyPlanner>/NewJourneyServerCopy/SFrom} === '' || ${RealTimeJourneyPlanner>/NewJourneyServerCopy/SFrom} === '')}">
+					<Text text="Select a valid From Station and To Staion" 
+						class="sapUiMediumMarginTop sapUiMediumMarginEnd smartJourneyPlannerJourneyEmptyVBox"></Text>
+				</VBox>
+				<VBox height="35rem" id="idGoogleMapTrial"
+					class="sapUiSmallMarginTopBottom sapUiMediumMarginEnd smartJourneyPlannerJourneyStation">
 				</VBox>
 			</VBox>
 		</semantic:content>
