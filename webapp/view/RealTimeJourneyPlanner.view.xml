@@ -36,7 +36,7 @@
 					<Button text="Submit" type="Emphasized" press="onPressSubmitButton"></Button>
 				</HBox>
 				<IconTabBar upperCase="false" expanded="{device>/isNoPhone}"
-					class="sapUiResponsiveContentPadding sapUiSmallMarginBottom smartJourneyPlannerIconTabBar"
+					class="sapUiResponsiveContentPadding sapUiSmallMarginBottom smartJourneyPlannerIconTabBar "
 					select="onChangeJourneyRouteTab" items="{RealTimeJourneyPlanner>/JourneyRoutes}" 
 					visible="{= (${RealTimeJourneyPlanner>/NewJourneyServerCopy/SFrom} !== '' &amp;&amp; ${RealTimeJourneyPlanner>/NewJourneyServerCopy/SFrom} !== '')}">
 					<items>
