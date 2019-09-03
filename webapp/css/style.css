@@ -119,3 +119,148 @@
     font-weight: bold;
     font-size: medium;
 }
+
+.smartJourneyPlannerJourneyRouteIcon.sapMFlexBoxWrapNoWrap {
+	border-style: groove;
+	border-radius: 5rem;
+}
+
+.smartJourneyPlannerJourneyRouteLine.sapMFlexBoxWrapNoWrap {
+	border-style: solid;
+    border-top: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    border-bottom-width: .25rem;
+}
+
+.smartJourneyPlannerProcessIcon .sapMFlexBoxWrapNoWrap {
+	align-items: center;
+}
+
+.smartJourneyPlannerJourneyRouteIconRedColor.sapMFlexBoxWrapNoWrap {
+	background-color: red;
+}
+
+.smartJourneyPlannerJourneyRouteIconGreenColor.sapMFlexBoxWrapNoWrap {
+	background-color: limegreen;
+}
+
+.smartJourneyPlannerJourneyRouteIconYellowColor.sapMFlexBoxWrapNoWrap {
+	background-color: yellow;
+}
+
+.smartJourneyPlannerJourneyRouteLineRedColor.sapMFlexBoxWrapNoWrap {
+	border-bottom-color: red;
+}
+
+.smartJourneyPlannerJourneyRouteLineGreenColor.sapMFlexBoxWrapNoWrap {
+	border-bottom-color: limegreen;
+}
+
+.smartJourneyPlannerJourneyRouteLineYellowColor.sapMFlexBoxWrapNoWrap {
+	border-bottom-color: yellow;
+}
+
+.smartJourneyPlannerJourneyRouteLineBlueColor.sapMFlexBoxWrapNoWrap {
+	border-bottom-color: blue;
+}
+
+.smartJourneyPlannerJourneyRouteLineVioletColor.sapMFlexBoxWrapNoWrap {
+	border-bottom-color: darkviolet;
+}
+
+.smartJourneyPlannerJourneyRouteLineOrangeColor.sapMFlexBoxWrapNoWrap {
+	border-bottom-color: darkorange;
+}
+
+.smartJourneyPlannerJourneyRouteLinePinkColor.sapMFlexBoxWrapNoWrap {
+	 border-bottom-color: deeppink;
+}
+
+.smartJourneyPlannerIconRedColor .sapUiIcon {
+	color: red;
+}
+
+.smartJourneyPlannerIconBlueColor .sapUiIcon {
+	color: blue;
+}
+
+.smartJourneyPlannerIconOrangeColor .sapUiIcon {
+	color: darkorange;
+}
+
+.smartJourneyPlannerIconVioletColor .sapUiIcon {
+	color: darkviolet;
+}
+
+.smartJourneyPlannerIconPinkColor .sapUiIcon {
+	color: deeppink;
+}
+
+.smartJourneyPlannerIconYellowColor .sapUiIcon {
+	color: yellow;
+}
+
+.smartJourneyPlannerIconGreenColor .sapUiIcon {
+	color: limegreen;
+}
+
+.smartJourneyPlannerGreenColorOuterCircle.sapMFlexBoxWrapNoWrap {
+	border-style: solid;
+    border-radius: 5rem;
+    background-color: limegreen;
+    border-width: 0.1rem;
+}
+
+.smartJourneyPlannerRedColorOuterCircle.sapMFlexBoxWrapNoWrap {
+	border-style: solid;
+    border-radius: 5rem;
+    background-color: red;
+    border-width: 0.1rem;
+}
+
+.smartJourneyPlannerBlueColorOuterCircle.sapMFlexBoxWrapNoWrap {
+	border-style: solid;
+    border-radius: 5rem;
+    background-color: blue;
+    border-width: 0.1rem;
+}
+
+.smartJourneyPlannerOrangeColorOuterCircle.sapMFlexBoxWrapNoWrap {
+	border-style: solid;
+    border-radius: 5rem;
+    background-color: darkorange;
+    border-width: 0.1rem;
+}
+
+.smartJourneyPlannerVioletColorOuterCircle.sapMFlexBoxWrapNoWrap {
+	border-style: solid;
+    border-radius: 5rem;
+    background-color: darkviolet;
+    border-width: 0.1rem;
+}
+
+.smartJourneyPlannerPinkColorOuterCircle.sapMFlexBoxWrapNoWrap {
+	border-style: solid;
+    border-radius: 5rem;
+    background-color: deeppink;
+    border-width: 0.1rem;
+}
+
+.smartJourneyPlannerYellowColorOuterCircle.sapMFlexBoxWrapNoWrap {
+	border-style: solid;
+    border-radius: 5rem;
+    background-color: yellow;
+    border-width: 0.1rem;
+}
+
+.smartJourneyPlannerInnerCircle.sapMFlexBoxWrapNoWrap {
+	border-style: solid;
+    border-radius: 5rem;
+    background-color: white;
+    border-width: 0.1rem;
+}
+
+.smartJourneyPlannerInnerCircle.sapMHBox {
+	margin: 0.2rem;
+}

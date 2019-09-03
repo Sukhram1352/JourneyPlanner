@@ -52,10 +52,12 @@ sap.ui.define([
 				StationEmptyStructure: {
 					"StationName": "",
 					"InterChangeStation": false,
-					"MetroLine": "",
+					"MetroStationColor": "",
+					"MetroLineColor": "",
 					"StationCriticality": ""
 				},
-				JourneyRoutes: []
+				JourneyRoutes: [],
+				RefreshButtonVisiblity: false
 			};
 		}
 	});
