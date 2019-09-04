@@ -98,6 +98,97 @@ sap.ui.define([
 		},
 		
 		/**
+		 * Formatter method to handle circle color
+		 * @param   {string}     sStationName              Station Name
+		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
+		 * @param   {string}     sStationCriticality       Station Criticality
+		 * @public
+		 * @returns {boolean}    sVisiblity                Visiblity of Red Circle
+		 */
+		formatJourneyRouteRedCircle: function(sStationName, bInterChangeStation, sStationCriticality) {
+			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
+			var oNewJourneyServerData = jQuery.extend(true, {}, 
+				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
+			var sFromStation = oNewJourneyServerData.SFrom;
+			var sToStation = oNewJourneyServerData.STo;
+				
+			if((sStationName === sFromStation || sStationName === sToStation || bInterChangeStation) && 
+				(sStationCriticality === "RED" || sStationCriticality === "Red")) {
+				return true;
+			} 
+			
+			return false;
+		},
+		
+		/**
+		 * Formatter method to handle circle color
+		 * @param   {string}     sStationName              Station Name
+		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
+		 * @param   {string}     sStationCriticality       Station Criticality
+		 * @public
+		 * @returns {boolean}    sVisiblity                Visiblity of Green Circle
+		 */
+		formatJourneyRouteGreenCircle: function(sStationName, bInterChangeStation, sStationCriticality) {
+			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
+			var oNewJourneyServerData = jQuery.extend(true, {}, 
+				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
+			var sFromStation = oNewJourneyServerData.SFrom;
+			var sToStation = oNewJourneyServerData.STo;
+				
+			if((sStationName === sFromStation || sStationName === sToStation || bInterChangeStation) && 
+				(sStationCriticality === "GREEN" || sStationCriticality === "Green")) {
+				return true;
+			} 
+			
+			return false;
+		},
+		
+		/**
+		 * Formatter method to handle circle color
+		 * @param   {string}     sStationName              Station Name
+		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
+		 * @param   {string}     sStationCriticality       Station Criticality
+		 * @public
+		 * @returns {boolean}    sVisiblity                Visiblity of Red Circle
+		 */
+		formatJourneyRouteYellowCircle: function(sStationName, bInterChangeStation, sStationCriticality) {
+			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
+			var oNewJourneyServerData = jQuery.extend(true, {}, 
+				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
+			var sFromStation = oNewJourneyServerData.SFrom;
+			var sToStation = oNewJourneyServerData.STo;
+				
+			if((sStationName === sFromStation || sStationName === sToStation || bInterChangeStation) && 
+				(sStationCriticality === "YELLOW" || sStationCriticality === "Yellow")) {
+				return true;
+			} 
+			
+			return false;
+		},
+		
+		/**
+		 * Formatter method to handle circle color
+		 * @param   {string}     sStationName              Station Name
+		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
+		 * @param   {string}     sStationCriticality       Station Criticality
+		 * @public
+		 * @returns {boolean}    sVisiblity                Visiblity of Grey Circle
+		 */
+		formatJourneyRouteGreyCircle: function(sStationName, bInterChangeStation, sStationCriticality) {
+			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
+			var oNewJourneyServerData = jQuery.extend(true, {}, 
+				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
+			var sFromStation = oNewJourneyServerData.SFrom;
+			var sToStation = oNewJourneyServerData.STo;
+				
+			if(sStationName !== sFromStation && sStationName !== sToStation && !bInterChangeStation) {
+				return true;
+			} 
+			
+			return false;
+		},
+		
+		/**
 		 * Formatter method to handle visiblity of Red Icon circle 
 		 * @param   {string}     sStationName              Station Name
 		 * @param   {boolean}    sbInterChangeStation      Inter Change Station

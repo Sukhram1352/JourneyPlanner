@@ -159,7 +159,7 @@
 .smartJourneyPlannerOuterCircle.sapMFlexBoxWrapNoWrap {
 	border-style: solid;
     border-radius: 5rem;
-    border-width: 0.1rem;
+    border-width: 0.07rem;
 }
 
 .smartJourneyPlannerGreenColorInnerCircle.sapMFlexBoxWrapNoWrap {
@@ -216,6 +216,14 @@
     background-color: white;
     border-width: 0.3rem;
     border-color: #E09D00;
+}
+
+.smartJourneyPlannerGreyColorInnerCircle.sapMFlexBoxWrapNoWrap {
+	border-style: solid;
+    border-radius: 5rem;
+    background-color: white;
+    border-width: 0.3rem;
+    border-color: darkgrey;
 }
 
 .smartJourneyPlannerInnerCircle.sapMHBox {
