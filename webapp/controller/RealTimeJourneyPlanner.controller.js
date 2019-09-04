@@ -59,48 +59,23 @@ sap.ui.define([
 			                 mapTypeId: google.maps.MapTypeId.ROADMAP
 			                 };
 			var map = new google.maps.Map(this.getView().byId("idGoogleMapTrial").getDomRef(), myOptions);
-			var marker = new google.maps.Marker({map: map,
-					position: new google.maps.LatLng(20,77)
-				});
-			// var infowindow = new google.maps.InfoWindow({content:'<strong></strong><br>SAP Labs India, Vatika tower, Tower A, 4th floor,, Golf Course Road, Sector-54,<br>122002 GURUGRAM<br>'});
-			// infowindow.open(map,marker);
+			this._oDirectionsRenderer = new google.maps.DirectionsRenderer({
+				map: map
+			});
+			this._oDirectionsService = new google.maps.DirectionsService;
+		    this._oDirectionsRenderer.setMap(map);
+		    
+		 //   var oRequest = {
+			// 	origin: oNewJourney.SFrom,
+			// 	destination: oNewJourney.STo,
+			// 	travelMode: "DRIVING"
+			// };
 			
-			var directionsRenderer = new google.maps.DirectionsRenderer({
-					map: map
-				});
-				var directionsService = new google.maps.DirectionsService;
-				var map = new google.maps.Map(document.getElementById('map'), {
-					zoom: 6,
-					center: {
-						lat: 23.0225,
-						lng: 72.5714
-					} //Initial Location on Map
-				});
-				    directionsRenderer.setMap(map);
-				directionsRenderer.setPanel(document.getElementById('left-div'));
-				var control = document.getElementById('front-div');
-				control.style.display = 'inline';
-				map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-				    document.getElementById('origin').addEventListener('change', function() {
-					distanceCalculator(directionsService, directionsRenderer);
-				}, false);
-				
-				document.getElementById('destination').addEventListener('click', function() {
-					distanceCalculator(directionsService, directionsRenderer);
-				}, false);
-				
-				var origin = document.getElementById('origin').value;
-				var destination = document.getElementById('destination').value;
-				var req = {
-					origin: origin,
-					destination: destination,
-					travelMode: 'DRIVING'
-				};
-				directionsService.route(req, function(response, status) {
-					if (status === 'OK') {
-						directionsRenderer.setDirections(response);
-				}
-				});
+			// this._oDirectionsService.route(oRequest, function(oResponse, sStatus) {
+			// 	if (sStatus === "OK") {
+			// 		this._oDirectionsRenderer.setDirections(oResponse);
+			// 	}
+			// });
 		},
 		
 		/**
@@ -445,6 +420,7 @@ sap.ui.define([
 					
 					var aJourneyRoutes = Utility.sanitizeEntitySetResult(oData, false);
 					this.modifyJourneyRoutesData(aJourneyRoutes);
+					this.updateMetroRoute();
 					
 					var aModifiedJourneyRoutes = jQuery.extend(true, [], oRealTimeJourneyPlannerModel.getProperty("/JourneyRoutes"));
 					if(aModifiedJourneyRoutes.length > 0) {
@@ -682,5 +658,25 @@ sap.ui.define([
 				filters: oFilter
 			});
 		},
+		
+		/**
+		 * Function to update Metro Route on Screen
+		 * @public
+		 */
+		updateMetroRoute: function() {
+			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
+			var oNewJourney = jQuery.extend(true, {}, oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
+			var oRequest = {
+				origin: oNewJourney.SFrom,
+				destination: oNewJourney.STo,
+				travelMode: "DRIVING"
+			};
+			
+			this._oDirectionsService.route(oRequest, function(oResponse, sStatus) {
+				if (sStatus === "OK") {
+					this._oDirectionsRenderer.setDirections(oResponse);
+				}
+			});
+		}
 	});
 });

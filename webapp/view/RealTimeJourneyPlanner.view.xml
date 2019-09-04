@@ -174,59 +174,59 @@
 														<HBox>
 															<VBox width="4rem" 
 																  height="4rem" 
-																  class="smartJourneyPlannerGreenColorOuterCircle"
+																  class="smartJourneyPlannerOuterCircle"
 																  visible="{= (${RealTimeJourneyPlanner>MetroStationColor} === 'GREEN' || 
 																		       ${RealTimeJourneyPlanner>MetroStationColor} === 'Green')}">
 																<HBox height="4rem" 
-																	  class="smartJourneyPlannerInnerCircle" />
+																	  class="smartJourneyPlannerInnerCircle smartJourneyPlannerGreenColorInnerCircle" />
 															</VBox>
 															<VBox width="4rem" 
 																  height="4rem" 
-																  class="smartJourneyPlannerRedColorOuterCircle"
+																  class="smartJourneyPlannerOuterCircle"
 															   	  visible="{= (${RealTimeJourneyPlanner>MetroStationColor} === 'RED' || 
 																		       ${RealTimeJourneyPlanner>MetroStationColor} === 'Red')}">
 																<HBox height="4rem" 
-																	  class="smartJourneyPlannerInnerCircle" />
+																	  class="smartJourneyPlannerInnerCircle smartJourneyPlannerRedColorInnerCircle" />
 															</VBox>
 															<VBox width="4rem" 
 																  height="4rem" 
-																  class="smartJourneyPlannerBlueColorOuterCircle"
+																  class="smartJourneyPlannerOuterCircle"
 																  visible="{= (${RealTimeJourneyPlanner>MetroStationColor} === 'BLUE' || 
 																		       ${RealTimeJourneyPlanner>MetroStationColor} === 'Blue')}">
 																<HBox height="4rem" 
-																	  class="smartJourneyPlannerInnerCircle" />
+																	  class="smartJourneyPlannerInnerCircle smartJourneyPlannerBlueColorInnerCircle" />
 															</VBox>
 															<VBox width="4rem" 
 																  height="4rem" 
-																  class="smartJourneyPlannerOrangeColorOuterCircle"
+																  class="smartJourneyPlannerOuterCircle"
 																  visible="{= (${RealTimeJourneyPlanner>MetroStationColor} === 'ORANGE' || 
 																		       ${RealTimeJourneyPlanner>MetroStationColor} === 'Orange')}">
 																<HBox height="4rem" 
-																	  class="smartJourneyPlannerInnerCircle" />
+																	  class="smartJourneyPlannerInnerCircle smartJourneyPlannerOrangeColorInnerCircle" />
 															</VBox>
 															<VBox width="4rem" 
 																  height="4rem" 
-																  class="smartJourneyPlannerVioletColorOuterCircle"
+																  class="smartJourneyPlannerOuterCircle"
 																  visible="{= (${RealTimeJourneyPlanner>MetroStationColor} === 'VIOLET' || 
 																		       ${RealTimeJourneyPlanner>MetroStationColor} === 'Violet')}">
 																<HBox height="4rem" 
-																	  class="smartJourneyPlannerInnerCircle" />
+																	  class="smartJourneyPlannerInnerCircle smartJourneyPlannerVioletColorInnerCircle" />
 															</VBox>
 															<VBox width="4rem" 
 																  height="4rem" 
-																  class="smartJourneyPlannerPinkColorOuterCircle"
+																  class="smartJourneyPlannerOuterCircle"
 																  visible="{= (${RealTimeJourneyPlanner>MetroStationColor} === 'PINK' || 
 																		       ${RealTimeJourneyPlanner>MetroStationColor} === 'Pink')}">
 																<HBox height="4rem" 
-																	  class="smartJourneyPlannerInnerCircle" />
+																	  class="smartJourneyPlannerInnerCircle smartJourneyPlannerPinkColorInnerCircle" />
 															</VBox>
 															<VBox width="4rem" 
 																  height="4rem" 
-																  class="smartJourneyPlannerYellowColorOuterCircle"
+																  class="smartJourneyPlannerOuterCircle"
 																  visible="{= (${RealTimeJourneyPlanner>MetroStationColor} === 'YELLOW' || 
 																		       ${RealTimeJourneyPlanner>MetroStationColor} === 'Yellow')}">
 																<HBox height="4rem" 
-																	  class="smartJourneyPlannerInnerCircle" />
+																	  class="smartJourneyPlannerInnerCircle smartJourneyPlannerYellowColorInnerCircle" />
 															</VBox>
 															<VBox visible="{parts: [{path: 'RealTimeJourneyPlanner>StationName'},
 		                                                                            {path: 'RealTimeJourneyPlanner>MetroLineColor'}],
