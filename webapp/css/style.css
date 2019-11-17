@@ -229,3 +229,8 @@
 .smartJourneyPlannerInnerCircle.sapMHBox {
 	margin: 0.15rem;
 }
+
+.smartJourneyPlannerMetroIconAdjustment .sapMFlexItemAlignAuto {
+	margin-top: 0.4rem;
+    margin-left: 0.6rem;
+}

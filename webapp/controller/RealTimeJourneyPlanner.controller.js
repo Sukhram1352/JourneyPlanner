@@ -1,15 +1,20 @@
 sap.ui.define([
 	"journeyPlanner/JourneyPlanner/controller/BaseController",
+	"journeyPlanner/JourneyPlanner/controller/RealTimeJourneyPlannerFormatter",
 	"journeyPlanner/JourneyPlanner/model/formatter",
 	"journeyPlanner/JourneyPlanner/model/RealTimeJourneyPlannerModel",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"journeyPlanner/JourneyPlanner/controller/ErrorHandler",
 	"journeyPlanner/JourneyPlanner/util/Utility"
-], function (BaseController, formatter, RealTimeJourneyPlannerModel, Filter, FilterOperator, ErrorHandler, Utility) {
+], function (BaseController, RealTimeJourneyPlannerFormatter, formatter, RealTimeJourneyPlannerModel, 
+			 Filter, FilterOperator, ErrorHandler, Utility) {
 	"use strict";
 
-	return BaseController.extend("journeyPlanner.JourneyPlanner.controller.RealTimeJourneyPlanner", {
+	return BaseController.extend("journeyPlanner.JourneyPlanner.controller.RealTimeJourneyPlanner", 
+	
+		// extend controller with helpers
+		jQuery.extend(true, {}, RealTimeJourneyPlannerFormatter, {
 
 		formatter: formatter,
 
@@ -23,6 +28,11 @@ sap.ui.define([
 		 */
 		onInit: function () {
 			this._oErrorHandler = new ErrorHandler(this.getOwnerComponent());
+			
+			// Global variables for Map
+			this._oPolyLine = [];
+			this._oStartMarker = null;
+			this._oEndMarker = null;
 
 			var oRealTimeJourneyPlannerModel = new RealTimeJourneyPlannerModel();
 			this.getView().setModel(oRealTimeJourneyPlannerModel, "RealTimeJourneyPlanner");
@@ -56,7 +66,7 @@ sap.ui.define([
 		onAfterRendering: function () {
 			var myOptions = {
 				zoom: 12,
-				center: new google.maps.LatLng(20, 77),
+				center: new google.maps.LatLng(28.657924, 77.215569),
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 			this.map = new google.maps.Map(this.getView().byId("idGoogleMapTrial").getDomRef(), myOptions);
@@ -66,11 +76,11 @@ sap.ui.define([
 					strokeColor: "red"
 				}
 			});
+					
 			this._oDirectionsService = new google.maps.DirectionsService;
 			this._oDirectionsRenderer.setMap(this.map);
 
 			// get the bounds of the polyline
-			// http://stackoverflow.com/questions/3284808/getting-the-bounds-of-a-polyine-in-google-maps-api-v3
 			google.maps.Polyline.prototype.getBounds = function (startBounds) {
 				if (startBounds) {
 					var bounds = startBounds;
@@ -83,18 +93,6 @@ sap.ui.define([
 				});
 				return bounds;
 			};
-
-			//   var oRequest = {
-			// 	origin: oNewJourney.SFrom,
-			// 	destination: oNewJourney.STo,
-			// 	travelMode: "DRIVING"
-			// };
-
-			// this._oDirectionsService.route(oRequest, function(oResponse, sStatus) {
-			// 	if (sStatus === "OK") {
-			// 		this._oDirectionsRenderer.setDirections(oResponse);
-			// 	}
-			// });
 		},
 
 		/**
@@ -107,376 +105,21 @@ sap.ui.define([
 				"SFrom": "",
 				"STo": ""
 			};
-
+			
 			oRealTimeJourneyPlannerModel.setProperty("/NewJourneyClientCopy", jQuery.extend(true, {}, oNewJourney));
 			oRealTimeJourneyPlannerModel.setProperty("/NewJourneyServerCopy", jQuery.extend(true, {}, oNewJourney));
 			oRealTimeJourneyPlannerModel.setProperty("/JourneyRoutes", []);
 			oRealTimeJourneyPlannerModel.setProperty("/RefreshButtonVisiblity", false);
-
+			
+			if (this.intervalHandle) {
+				clearInterval(this.intervalHandle);
+			}
+			
+			this.removeAlreadyDrawnedPolylines();
+			
 			this.onNavBack();
 		},
-
-		/**
-		 * Formatter method to handle circle color
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
-		 * @param   {string}     sStationCriticality       Station Criticality
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Red Circle
-		 */
-		formatJourneyRouteRedCircle: function (sStationName, bInterChangeStation, sStationCriticality) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var oNewJourneyServerData = jQuery.extend(true, {},
-				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
-			var sFromStation = oNewJourneyServerData.SFrom;
-			var sToStation = oNewJourneyServerData.STo;
-
-			if ((sStationName === sFromStation || sStationName === sToStation || bInterChangeStation) &&
-				(sStationCriticality === "RED" || sStationCriticality === "Red")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle circle color
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
-		 * @param   {string}     sStationCriticality       Station Criticality
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Green Circle
-		 */
-		formatJourneyRouteGreenCircle: function (sStationName, bInterChangeStation, sStationCriticality) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var oNewJourneyServerData = jQuery.extend(true, {},
-				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
-			var sFromStation = oNewJourneyServerData.SFrom;
-			var sToStation = oNewJourneyServerData.STo;
-
-			if ((sStationName === sFromStation || sStationName === sToStation || bInterChangeStation) &&
-				(sStationCriticality === "GREEN" || sStationCriticality === "Green")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle circle color
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
-		 * @param   {string}     sStationCriticality       Station Criticality
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Red Circle
-		 */
-		formatJourneyRouteYellowCircle: function (sStationName, bInterChangeStation, sStationCriticality) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var oNewJourneyServerData = jQuery.extend(true, {},
-				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
-			var sFromStation = oNewJourneyServerData.SFrom;
-			var sToStation = oNewJourneyServerData.STo;
-
-			if ((sStationName === sFromStation || sStationName === sToStation || bInterChangeStation) &&
-				(sStationCriticality === "YELLOW" || sStationCriticality === "Yellow")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle circle color
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
-		 * @param   {string}     sStationCriticality       Station Criticality
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Grey Circle
-		 */
-		formatJourneyRouteGreyCircle: function (sStationName, bInterChangeStation, sStationCriticality) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var oNewJourneyServerData = jQuery.extend(true, {},
-				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
-			var sFromStation = oNewJourneyServerData.SFrom;
-			var sToStation = oNewJourneyServerData.STo;
-
-			if (sStationName !== sFromStation && sStationName !== sToStation && !bInterChangeStation) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Red Icon circle 
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
-		 * @param   {string}     sStationCriticality       Station Criticality
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of VBox
-		 */
-		formatJourneyRouteRedIconCircle: function (sStationName, bInterChangeStation, sStationCriticality) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var oNewJourneyServerData = jQuery.extend(true, {},
-				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
-			var sFromStation = oNewJourneyServerData.SFrom;
-			var sToStation = oNewJourneyServerData.STo;
-
-			if ((sStationName === sFromStation || sStationName === sToStation || bInterChangeStation) &&
-				(sStationCriticality === "RED" || sStationCriticality === "Red")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Green Icon circle 
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
-		 * @param   {string}     sStationCriticality       Station Criticality
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of VBox
-		 */
-		formatJourneyRouteGreenIconCircle: function (sStationName, bInterChangeStation, sStationCriticality) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var oNewJourneyServerData = jQuery.extend(true, {},
-				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
-			var sFromStation = oNewJourneyServerData.SFrom;
-			var sToStation = oNewJourneyServerData.STo;
-
-			if ((sStationName === sFromStation || sStationName === sToStation || bInterChangeStation) &&
-				(sStationCriticality === "GREEN" || sStationCriticality === "Green")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Yellow Icon circle 
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
-		 * @param   {string}     sStationCriticality       Station Criticality
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of VBox
-		 */
-		formatJourneyRouteYellowIconCircle: function (sStationName, bInterChangeStation, sStationCriticality) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var oNewJourneyServerData = jQuery.extend(true, {},
-				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
-			var sFromStation = oNewJourneyServerData.SFrom;
-			var sToStation = oNewJourneyServerData.STo;
-
-			if ((sStationName === sFromStation || sStationName === sToStation || bInterChangeStation) &&
-				(sStationCriticality === "YELLOW" || sStationCriticality === "Yellow")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Normal Icon circle 
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {boolean}    sbInterChangeStation      Inter Change Station
-		 * @param   {string}     sStationCriticality       Station Criticality
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of VBox
-		 */
-		formatJourneyRouteNormalIconCircle: function (sStationName, bInterChangeStation, sStationCriticality) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var oNewJourneyServerData = jQuery.extend(true, {},
-				oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
-			var sFromStation = oNewJourneyServerData.SFrom;
-			var sToStation = oNewJourneyServerData.STo;
-
-			if (!bInterChangeStation && sStationName !== sFromStation && sStationName !== sToStation) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Red Connection Line
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {string}     sMetroLineColor           Metro Line
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Connection Line
-		 */
-		formatJourneyRouteFromStationRedLine: function (sStationName, sMetroLineColor) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var sToStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/STo");
-
-			if ((sStationName !== sToStation) && (sMetroLineColor === "RED" || sMetroLineColor === "Red")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Blue Connection Line
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {string}     sMetroLineColor           Metro Line
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Connection Line
-		 */
-		formatJourneyRouteFromStationBlueLine: function (sStationName, sMetroLineColor) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var sToStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/STo");
-
-			if ((sStationName !== sToStation) && (sMetroLineColor === "BLUE" || sMetroLineColor === "Blue")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Green Connection Line
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {string}     sMetroLineColor           Metro Line
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Connection Line
-		 */
-		formatJourneyRouteFromStationGreenLine: function (sStationName, sMetroLineColor) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var sToStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/STo");
-
-			if ((sStationName !== sToStation) && (sMetroLineColor === "GREEN" || sMetroLineColor === "Green")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Violet Connection Line
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {string}     sMetroLineColor           Metro Line
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Connection Line
-		 */
-		formatJourneyRouteFromStationVioletLine: function (sStationName, sMetroLineColor) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var sToStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/STo");
-
-			if ((sStationName !== sToStation) && (sMetroLineColor === "VIOLET" || sMetroLineColor === "Violet")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Orange Connection Line
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {string}     sMetroLineColor           Metro Line
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Connection Line
-		 */
-		formatJourneyRouteFromStationOrangeLine: function (sStationName, sMetroLineColor) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var sToStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/STo");
-
-			if ((sStationName !== sToStation) && (sMetroLineColor === "ORANGE" || sMetroLineColor === "Orange")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Pink Connection Line
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {string}     sMetroLineColor           Metro Line
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Connection Line
-		 */
-		formatJourneyRouteFromStationPinkLine: function (sStationName, sMetroLineColor) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var sToStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/STo");
-
-			if ((sStationName !== sToStation) && (sMetroLineColor === "PINK" || sMetroLineColor === "Pink")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Yellow Connection Line
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {string}     sMetroLineColor           Metro Line
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Connection Line
-		 */
-		formatJourneyRouteFromStationYellowLine: function (sStationName, sMetroLineColor) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var sToStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/STo");
-
-			if ((sStationName !== sToStation) && (sMetroLineColor === "YELLOW" || sMetroLineColor === "Yellow")) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Icon Bottom Text
-		 * @param   {string}     sStationName              Station Name
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Icon Bottom Text
-		 */
-		formatIconBottomFromStationText: function (sStationName) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var sFromStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/SFrom");
-
-			if (sStationName === sFromStation) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Icon Bottom Text
-		 * @param   {string}     sStationName              Station Name
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Icon Bottom Text
-		 */
-		formatIconBottomToStationText: function (sStationName) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var sToStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/STo");
-
-			if (sStationName === sToStation) {
-				return true;
-			}
-
-			return false;
-		},
-
-		/**
-		 * Formatter method to handle visiblity of Icon Bottom Text
-		 * @param   {string}     sStationName              Station Name
-		 * @param   {string}     bInterChangeStation       Inter Change Station
-		 * @public
-		 * @returns {boolean}    sVisiblity                Visiblity of Icon Bottom Text
-		 */
-		formatIconBottomNormalText: function (sStationName, bInterChangeStation) {
-			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			var sFromStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/SFrom");
-			var sToStation = oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy/STo");
-
-			if (sStationName !== sFromStation && sStationName !== sToStation && !bInterChangeStation) {
-				return true;
-			}
-
-			return false;
-		},
-
+		
 		/**
 		 * Called when From Station DropDown selection value is changed 
 		 * @param {object} oEvent DropDown selection change event 
@@ -494,23 +137,33 @@ sap.ui.define([
 		onToStationSelectionChange: function (oEvent) {
 			this.validateStationDropDowns("DropDown2");
 		},
-
+		
 		/**
-		 * Called when Submit button is pressed
+		 * Function is Called when Submit button is pressed
 		 * @param {object} oEvent DropDown selection change event 
 		 * @public
 		 */
 		onPressSubmitButton: function (oEvent) {
 			this.validateStationDropDowns("Both");
-
+			
 			if (this.checkStationsValidity()) {
+				this.getView().getModel("RealTimeJourneyPlanner").setProperty("/FullScreenPageBusy", true);
 				if (this.intervalHandle) {
 					clearInterval(this.intervalHandle);
 				}
 				this.getJourneyRoutesData();
 			}
 		},
-
+		
+		/**
+		 * Function is Called when Icon Tab Bar selection is changed
+		 * @param {object} oEvent DropDown selection change event 
+		 * @public
+		 */
+		onChangeJourneyRouteTab: function() {
+			this.updateMetroRoute();
+		},
+		
 		/**
 		 * Function to get Journey Routes 
 		 * @public
@@ -520,7 +173,7 @@ sap.ui.define([
 			var oNewJourney = jQuery.extend(true, {}, oRealTimeJourneyPlannerModel.getProperty("/NewJourneyClientCopy"));
 			var oFilter;
 			var aFilters = [];
-
+			
 			aFilters.push(new Filter("SFrom", FilterOperator.EQ, oNewJourney.SFrom));
 			aFilters.push(new Filter("STo", FilterOperator.EQ, oNewJourney.STo));
 			oFilter = [new Filter(aFilters, true)];
@@ -641,44 +294,44 @@ sap.ui.define([
 			if (aJourneyRoutes.length > 0) {
 				oNewJourneyServerCopy = jQuery.extend(true, {}, oRealTimeJourneyPlannerModel.getProperty(
 					"/NewJourneyClientCopy"));
-
+					
 				oNewJourneyServerCopy.TransId = aJourneyRoutes[0].TransId;
-
+					
 				oRealTimeJourneyPlannerModel.setProperty("/NewJourneyServerCopy", jQuery.extend(true, {}, oNewJourneyServerCopy));
 			}
-
+				
 			for (var intI = 0; intI < aJourneyRoutes.length; intI++) {
 				oJourneyRouteEmptyStructure = jQuery.extend(true, {}, oRealTimeJourneyPlannerModel.getProperty(
 					"/JourneyRouteEmptyStructure"));
-
+					
 				aVarStationCriticalityMap = [];
 				aMetroStations = [];
 				aMetroLines = [];
 				aStations = [];
 				aStationCriticality = [];
 				aVariableStations = [];
-
+				
 				oJourneyRouteEmptyStructure.Route = (Number(aJourneyRoutes[intI].OptionId) === 1) ?
 					"Preferred Route" : "Optional Route " + aJourneyRoutes[intI].OptionId;
 				oJourneyRouteEmptyStructure.RouteId = "IconTabItem" + aJourneyRoutes[intI].OptionId;
-
+					
 				oJourneyRouteEmptyStructure.JourneyTime = Number(aJourneyRoutes[intI].Total) + " Min";
 				oJourneyRouteEmptyStructure.NormalFare = "₹ " + Number(aJourneyRoutes[intI].Fare);
-
+					
 				iNormalFare = Number(aJourneyRoutes[intI].Fare);
 				oJourneyRouteEmptyStructure.ConcessionalFare = "₹ " + String(iNormalFare - Math.round((iNormalFare * 10) / 100));
-
+					
 				aVariableStations = aJourneyRoutes[intI].VariableStation.split("->");
 				aStationCriticality = aJourneyRoutes[intI].Criticality.split("->");
 				aMetroStations = aJourneyRoutes[intI].StationName.split("->");
 				aMetroLines = aJourneyRoutes[intI].LineColour.split("->");
-
+					
 				for (var intJ = 0; intJ < aVariableStations.length; intJ++) {
 					oVarStationCriticalityMap = {};
-
+						
 					oVarStationCriticalityMap.StationName = aVariableStations[intJ];
 					oVarStationCriticalityMap.Criticality = aStationCriticality[intJ];
-
+						
 					switch (intJ) {
 					case 0:
 						oVarStationCriticalityMap.Station = "From Station";
@@ -689,48 +342,41 @@ sap.ui.define([
 					default:
 						oVarStationCriticalityMap.Station = "InterChange Station " + (intJ - 1);
 					}
-
+						
 					aVarStationCriticalityMap.push(oVarStationCriticalityMap);
 				}
-
+						
 				aVarStationCriticalityMap.splice((aVarStationCriticalityMap.length - 1), 0, aVarStationCriticalityMap.splice(1, 1)[0]);
-
+					
 				aVariableStations.splice(0, 2);
-
+					
 				oJourneyRouteEmptyStructure.NoOfStations = aMetroStations.length;
 				oJourneyRouteEmptyStructure.NoOfInterChange = Number(aJourneyRoutes[intI].NoInterchange);
-
+					
 				for (var intK = 0; intK < aMetroStations.length; intK++) {
 					oStationEmptyStructure = jQuery.extend(true, {}, oRealTimeJourneyPlannerModel.getProperty("/StationEmptyStructure"));
-
+						
 					oStationEmptyStructure.StationName = aMetroStations[intK];
 					oStationEmptyStructure.MetroStationColor = aMetroLines[intK];
 					oStationEmptyStructure.MetroLineColor = aMetroLines[intK + 1];
 					oStationEmptyStructure.InterChangeStation = (aVariableStations.indexOf(aMetroStations[intK]) >= 0) ? true : false;
-
-					//TODO: needs to uncomment the below code
-
-					// if(oStationEmptyStructure.InterChangeStation) {
-					// 	oStationEmptyStructure.MetroStationColor = "";
-					// }
-
-					iMatchingIndex = -1;
-
+						
 					iMatchingIndex = Utility.findWithAttr(aVarStationCriticalityMap, "StationName", aMetroStations[intK]);
 					if (iMatchingIndex >= 0) {
 						oStationEmptyStructure.StationCriticality = aVarStationCriticalityMap[iMatchingIndex].Criticality;
 					}
-
+						
 					aStations.push(oStationEmptyStructure);
 				}
-
+					
 				oJourneyRouteEmptyStructure.Stations = aStations;
 				oJourneyRouteEmptyStructure.VariableStations = aVarStationCriticalityMap;
-
+					
 				aModifiedJourneyRoutes.push(oJourneyRouteEmptyStructure);
 			}
-
+				
 			oRealTimeJourneyPlannerModel.setProperty("/JourneyRoutes", jQuery.extend(true, [], aModifiedJourneyRoutes));
+			oRealTimeJourneyPlannerModel.setProperty("/FullScreenPageBusy", false);
 		},
 
 		/**
@@ -741,7 +387,7 @@ sap.ui.define([
 			var self = this;
 			this.intervalHandle = setInterval(function () {
 				self.refreshJourneyRoutesData();
-			}, 120000);
+			}, 60000);
 		},
 
 		/**
@@ -756,6 +402,8 @@ sap.ui.define([
 
 			aFilters.push(new Filter("TransId", FilterOperator.EQ, oNewJourney.TransId));
 			oFilter = [new Filter(aFilters, true)];
+			
+			this.getView().getModel("RealTimeJourneyPlanner").setProperty("/FullScreenPageBusy", true);
 
 			this.getOwnerComponent().getModel().read("/NRouteReqSet", {
 				success: function (oData) {
@@ -774,103 +422,144 @@ sap.ui.define([
 		 * @public
 		 */
 		updateMetroRoute: function () {
+			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
+			var sSelectedItemTabKey = this.getView().byId("idRealTimeJourneyPlannerIconTabBar").getSelectedKey();
+			var sRouteId = (sSelectedItemTabKey === "") ? "IconTabItem1" : sSelectedItemTabKey;
+			var aStations = jQuery.extend(true, [], 
+						oRealTimeJourneyPlannerModel.getProperty("/JourneyRoutes/" + (Number(sRouteId.split("IconTabItem")[1]) - 1) + "/Stations"));
+			var aVariableRouteStations = jQuery.extend(true, [], 
+						oRealTimeJourneyPlannerModel.getProperty("/JourneyRoutes/" + (Number(sRouteId.split("IconTabItem")[1]) - 1) + "/VariableStations"));
+			var aStationMapRelatedData = jQuery.extend(true, [], oRealTimeJourneyPlannerModel.getProperty("/StationMapRelatedData"));
+			var oRequiredStationData = {};
+			var aRequiredStationData = [];
+			
+			this.removeAlreadyDrawnedPolylines();
+			
+			for(var intI = 0; intI < aStations.length; intI++) {
+				if(Utility.findWithAttr(aVariableRouteStations, "StationName", aStations[intI].StationName) >= 0) {
+					oRequiredStationData = aStationMapRelatedData[Utility.findWithAttr(aStationMapRelatedData, "StationName", aStations[intI].StationName)];
+					oRequiredStationData.color = aStations[intI].MetroLineColor;
+					aRequiredStationData.push(aStationMapRelatedData[Utility.findWithAttr(aStationMapRelatedData, "StationName", aStations[intI].StationName)]);
+					oRequiredStationData= {};
+				}
+			}
+			
+			this.drawMetroLineInGoogleMap(aRequiredStationData);
+		},
+		
+		/**
+		 * Function to remove already drawned polylines and markers
+		 * @public
+		 */
+		removeAlreadyDrawnedPolylines: function() {
+			// Remove already drawned polylines on Google Map
+			for(var intJ = 0; intJ < this._oPolyLine.length; intJ++) {
+				this._oPolyLine[intJ].setMap(null);
+			}
+			
+			// Remove Start Marker which is drawned earlier
+			if(this._oStartMarker) {
+				this._oStartMarker.setMap(null);
+			}
+			
+			// Remove End Marker which is drawned earlier
+			if(this._oEndMarker) {
+				this._oEndMarker.setMap(null);
+			}
+		},
+		
+		/**
+		 * Function to draw polyline and markers in google map as per current route
+		 * @public
+		 */
+		drawMetroLineInGoogleMap: function(aRequiredStationData) {
+			var oNewJourneyClientCopy = this.getView().getModel("RealTimeJourneyPlanner").getProperty("/NewJourneyClientCopy");
 			var polylines = [];
 			var oMapDeferredObject = jQuery.Deferred();
-			//	var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");
-			//	var oNewJourney = jQuery.extend(true, {}, oRealTimeJourneyPlannerModel.getProperty("/NewJourneyServerCopy"));
-			// var oRequest = {
-			// 	origin: new google.maps.LatLng(28.671634, 77.155168), //oNewJourney.SFrom,
-			// 	destination: new google.maps.LatLng(28.628939, 77.241448), //oNewJourney.STo,
-			// 	provideRouteAlternatives: true,
-			// 	travelMode: "TRANSIT",
-			// 	transitOptions: {
-			// 		modes: ['RAIL'],
-			// 		routingPreference: 'FEWER_TRANSFERS'
-			// 	},
-			// };
+			var aStationLatLongData = [];
+			var oStationLatLongData = {};
+			
+			for(var intI = 0; intI < (aRequiredStationData.length - 1); intI++) {
+				oStationLatLongData.startlatitude = aRequiredStationData[intI].Latitude;
+				oStationLatLongData.startlongitude = aRequiredStationData[intI].Longitude;
+				oStationLatLongData.endlatitude = aRequiredStationData[intI + 1].Latitude;
+				oStationLatLongData.endlongitude = aRequiredStationData[intI + 1].Longitude;
+				oStationLatLongData.color = aRequiredStationData[intI].color.toLowerCase();
+				
+				aStationLatLongData.push(oStationLatLongData);
+				
+				if(intI === 0) {
+					this._oStartMarker = new google.maps.Marker({
+						position: {
+							lat: oStationLatLongData.startlatitude,
+							lng: oStationLatLongData.startlongitude
+						},
+						map: this.map,
+						title: oNewJourneyClientCopy.SFrom
+					});
+				}
+				
+				if(intI === (aRequiredStationData.length - 2)) {
+					this._oEndMarker = new google.maps.Marker({
+						position: {
+							lat: oStationLatLongData.endlatitude,
+							lng: oStationLatLongData.endlongitude
+						},
+						map: this.map,
+						title: oNewJourneyClientCopy.STo
+					});
+				}
+				
+				oStationLatLongData = {};
+			}
 
-			var aAddresses = [{
-				startlatitude: 28.671634,
-				startlongitude: 77.155168,
-				endlatitude: 28.673594,
-				endlongitude: 77.170290,
-				color: "green"
-
-			}, {
-				startlatitude: 28.673594,
-				startlongitude: 77.170290,
-				endlatitude: 28.667537,
-				endlongitude: 77.228199,
-				color: "red"
-			}];
-			var marker1 = new google.maps.Marker({
-				position: {
-					lat: 28.671634,
-					lng: 77.155168
-				},
-				map: this.map,
-				icon: {
-					path: google.maps.SymbolPath.CIRCLE,
-					scale: 4
-				},
-				title: 'Ashok park Main'
-			});
-
-			var marker2 = new google.maps.Marker({
-				position: {
-					lat: 28.667537,
-					lng: 77.228199
-				},
-				icon: {
-					path: google.maps.SymbolPath.CIRCLE,
-					scale: 4
-				},
-				map: this.map,
-				title: 'Kashmiri Gate'
-			});
-
-			var bounds = new google.maps.LatLngBounds();
-			aAddresses.forEach(function (oAddress, iIndex) {
+			var aBounds = new google.maps.LatLngBounds();
+			
+			aStationLatLongData.forEach(function (oStationLatLong, iIndex) {
 				var oRequest = {
-					origin: new google.maps.LatLng(oAddress.startlatitude, oAddress.startlongitude), //oNewJourney.SFrom,
-					destination: new google.maps.LatLng(oAddress.endlatitude, oAddress.endlongitude), //oNewJourney.STo,
+					origin: new google.maps.LatLng(oStationLatLong.startlatitude, oStationLatLong.startlongitude), 
+					destination: new google.maps.LatLng(oStationLatLong.endlatitude, oStationLatLong.endlongitude), 
 					provideRouteAlternatives: true,
 					travelMode: "TRANSIT",
 					transitOptions: {
-						modes: ['RAIL']
-					},
+						modes: ["RAIL"]
+					}
 				};
 
 				this._oDirectionsService.route(oRequest, function (oResponse, sStatus) {
 					if (sStatus === "OK") {
-						var line = this.drawPolyline(oResponse.routes[0].overview_path, oAddress.color);
+						var line = this.drawPolyline(oResponse.routes[0].overview_path, oStationLatLong.color);
 						polylines.push(line);
-						bounds = line.getBounds(bounds);
-
-						if (iIndex === aAddresses.length - 1) {
+						aBounds = line.getBounds();
+						
+						this._oPolyLine.push(line);
+						
+						if (iIndex === aStationLatLongData.length - 1) {
 							oMapDeferredObject.resolve();
 						}
-						//this._oDirectionsRenderer.setDirections(oResponse);
 					}
 				}.bind(this));
 			}.bind(this));
 
 			oMapDeferredObject.done(function () {
-				this.map.fitBounds(bounds);
+				this.map.fitBounds(aBounds);
 			}.bind(this));
-
 		},
-
+		
+		/**
+		 * Function to draw polyline in google map as per current route
+		 * @public
+		 */
 		drawPolyline: function (path, color) {
 			var line = new google.maps.Polyline({
 				path: path,
 				strokeColor: color,
 				strokeOpacity: 0.7,
-				strokeWeight: 5
+				strokeWeight: 6
 			});
+			
 			line.setMap(this.map);
 			return line;
 		}
-
-	});
+	}));
 });
