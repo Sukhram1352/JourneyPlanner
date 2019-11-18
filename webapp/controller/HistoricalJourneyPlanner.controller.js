@@ -37,6 +37,16 @@ sap.ui.define([
 					this._oErrorHandler(oError);
 				}.bind(this)
 			});
+			
+			var oRoute = this.getRouter();
+			oRoute.attachRoutePatternMatched(this._onRouteMatched, this);
+		},
+		
+		_onRouteMatched:function(oEvent){
+			var sStationName = oEvent.getParameter("arguments").StationName;
+			this.getModel("HistoricalJourneyPlanner").setProperty("/NewStationClientCopy", {
+				"Station": sStationName
+			});
 		},
 		
 		/**

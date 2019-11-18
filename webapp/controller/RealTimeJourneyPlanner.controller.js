@@ -121,6 +121,15 @@ sap.ui.define([
 			this.onNavBack();
 		},
 		
+		onStationNameSelect: function(oEvent){
+			debugger
+			var sStationName = oEvent.getSource().getProperty("text");
+			
+			this.getRouter().navTo("historicalJourneyPlanner", {
+				StationName: sStationName
+			});
+		},
+		
 		/**
 		 * Called when From Station DropDown selection value is changed 
 		 * @param {object} oEvent DropDown selection change event 
