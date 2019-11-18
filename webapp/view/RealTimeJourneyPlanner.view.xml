@@ -480,8 +480,7 @@
 		                                                                formatter: '.formatIconBottomFromStationText'}"  
 		                                                      class="sapUiTinyMarginTopBottom"
 															  justifyContent="Center" >
-															<Text text="{RealTimeJourneyPlanner>StationName}">
-															</Text>
+															<Link text="{RealTimeJourneyPlanner>StationName}" />
 															<Text text="(From Station)" 
 																  class="smartJourneyPlannerJourneyInterChangeStation"
 																  visible="{parts: [{path: 'RealTimeJourneyPlanner>StationName'}],
@@ -492,8 +491,7 @@
 		                                                                formatter: '.formatIconBottomToStationText'}"  
 		                                                      class="sapUiTinyMarginTopBottom"
 															  justifyContent="Center" >
-															<Text text="{RealTimeJourneyPlanner>StationName}">
-															</Text>
+															<Link text="{RealTimeJourneyPlanner>StationName}" />
 															<Text text="(To Station)" 
 																  class="smartJourneyPlannerJourneyInterChangeStation"
 																  visible="{parts: [{path: 'RealTimeJourneyPlanner>StationName'}],
@@ -503,8 +501,7 @@
 														<VBox visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}"  
 															  class="sapUiTinyMarginTopBottom"
 															  justifyContent="Center" >
-															<Text text="{RealTimeJourneyPlanner>StationName}">
-															</Text>
+															<Link text="{RealTimeJourneyPlanner>StationName}" />
 															<Text text="(Change Here)" 
 																  class="smartJourneyPlannerJourneyInterChangeStation"
 																  visible="{= ${RealTimeJourneyPlanner>InterChangeStation}}">
@@ -515,8 +512,7 @@
 		                                                                formatter: '.formatIconBottomNormalText'}"  
 		                                                      class="sapUiSmallMarginTopBottom"
 															  justifyContent="Center" >
-															<Text text="{RealTimeJourneyPlanner>StationName}">
-															</Text>
+															<Link text="{RealTimeJourneyPlanner>StationName}" />
 														</VBox>
 													</VBox>
 												</items>
