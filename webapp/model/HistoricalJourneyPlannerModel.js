@@ -27,8 +27,9 @@ sap.ui.define([
 		 */
 		_setInitialModelStructure: function() {
 			this._oClientData = {
-				NewJourneyClientCopy: {},
-				NewJourneyServerCopy: {}
+				NewStationClientCopy: {},
+				NewStationServerCopy: {},
+				FullScreenPageBusy: false
 			};
 		}
 	});
