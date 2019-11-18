@@ -27,9 +27,28 @@ sap.ui.define([
 		 */
 		_setInitialModelStructure: function() {
 			this._oClientData = {
-				NewStationClientCopy: {},
-				NewStationServerCopy: {},
-				FullScreenPageBusy: false
+				NewStationClientCopy: {
+					"Station": "",
+					"Day": ""
+				},
+				Days: [{
+					"Day_Text": "Sunday"
+				},{
+					"Day_Text": "Monday"
+				},{
+					"Day_Text": "Tuesday"
+				},{
+					"Day_Text": "Wednesday"
+				},{
+					"Day_Text": "Thursday"
+				},{
+					"Day_Text": "Friday"
+				},{
+					"Day_Text": "Saturday"
+				}],
+				FullScreenPageBusy: false,
+				EmptyVBoxVisiblity: true,
+				CrowdData: []
 			};
 		}
 	});

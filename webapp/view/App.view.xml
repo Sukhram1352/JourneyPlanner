@@ -9,7 +9,7 @@
 		id="app"
 		busy="{appView>/busy}"
 		busyIndicatorDelay="{appView>/delay}"
-		backgroundImage="images/DelhiMetroMap.jpg" backgroundOpacity="0.2"/>
+		backgroundImage="images/DelhiMetroMap.jpg" backgroundOpacity="0.1"/>
 	</Shell>
 
 </mvc:View>

@@ -97,6 +97,7 @@ sap.ui.define([
 
 		/**
 		 * Function is called on Back Navigation from RealTimeJourneyPlanner application to Tiles Page
+		 * @public
 		 */
 		onRealTimeJourneyPlannerNavBack: function () {
 			var oRealTimeJourneyPlannerModel = this.getView().getModel("RealTimeJourneyPlanner");

@@ -2,7 +2,11 @@
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns:semantic="sap.m.semantic"
-	xmlns:core="sap.ui.core">
+    xmlns:c="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:core="sap.ui.core"
+	xmlns:viz="sap.viz.ui5.controls" 
+	xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
 	<semantic:FullscreenPage title="Historical Journey Planner" 
 							 navButtonPress="onHistoricalJourneyPlannerNavBack" 
 							 showNavButton="true" 
@@ -16,45 +20,84 @@
 						<ComboBox id="idStationDropDown" 
 								  class="smartJourneyPlannerStationDropDowns"
 								  items="{path: 'HistoricalJourneyPlanner>/MetroStations', 
-										  sorter: { path: 'Station_Name' }}"
-								  selectedKey="{HistoricalJourneyPlanner>/NewJourneyClientCopy/SFrom}" 
+										  sorter: {path: 'Station_Name'}}"
+								  selectedKey="{HistoricalJourneyPlanner>/NewStationClientCopy/Station}" 
 								  width="100%"
 								  placeholder="Station" 
 								  required="true" 
-								  change="onStationSelectionChange">
+								  c:dropdown="Station"
+								  change="onDropDownSelectionChange">
 							<core:Item key="{HistoricalJourneyPlanner>Station_Name}" 
 									   text="{HistoricalJourneyPlanner>Station_Name}" />
 						</ComboBox>
 					</VBox>
-					<VBox width="20%" 
-						  class="sapUiTinyMarginBeginEnd">
-						<ComboBox id="idToStationDropDown" 
-								  class="smartJourneyPlannerStationDropDowns"
-								  items="{path: 'RealTimeJourneyPlanner>/MetroStations', 
-										  sorter: { path: 'Station_Name' }}"
-								  selectedKey="{RealTimeJourneyPlanner>/NewJourneyClientCopy/STo}" 
+					<VBox width="20%">
+						<ComboBox id="idDayDropDown" 
+								  class="smartJourneyPlannerStationDropDowns sapUiTinyMarginBegin"
+								  items="{HistoricalJourneyPlanner>/Days}"
+								  selectedKey="{HistoricalJourneyPlanner>/NewStationClientCopy/Day}" 
 								  width="100%"
-								  placeholder="To" 
+								  placeholder="Day" 
 								  required="true" 
-								  change="onToStationSelectionChange">
-							<core:Item key="{RealTimeJourneyPlanner>Station_Name}" text="{RealTimeJourneyPlanner>Station_Name}" />
+								  c:dropdown="Day"
+								  change="onDropDownSelectionChange">
+							<core:Item key="{HistoricalJourneyPlanner>Day_Text}" 
+									   text="{HistoricalJourneyPlanner>Day_Text}" />
 						</ComboBox>
 					</VBox>
 					<Button text="Submit" 
 							type="Emphasized" 
-							class="sapUiTinyMarginEnd"
+							class="sapUiSmallMarginBegin"
 							press="onPressSubmitButton">
 					</Button>
 				</HBox>
 				<VBox height="6rem" 
 					  class="sapUiSmallMarginTopBottom 
 							 sapUiMediumMarginEnd 
-							 smartJourneyPlannerJourneyStation">
-					<Text text="Select a valid Station" 
+							 smartJourneyPlannerJourneyStation"
+					  visible="{HistoricalJourneyPlanner>/EmptyVBoxVisiblity}">
+					<Text text="Select a valid Station and Day" 
 						  class="sapUiMediumMarginTop 
 								 sapUiMediumMarginEnd 
 								 smartJourneyPlannerJourneyEmptyVBox">
 					</Text>
+				</VBox>
+				<VBox visible="{= !${HistoricalJourneyPlanner>/EmptyVBoxVisiblity}}">
+					<viz:VizFrame id="idCrowdVizFrame"
+							      uiConfig="{applicationSet:'fiori'}" 
+							      height='500px' 
+							      width="100%" 
+							      vizType='line'>
+						<viz:dataset>
+							<viz.data:FlattenedDataset data="{HistoricalJourneyPlanner>/CrowdData}">
+								<viz.data:dimensions>
+									<viz.data:DimensionDefinition name="Time" 
+																  value="{path:'HistoricalJourneyPlanner>time', 
+																		  type:'sap.ui.model.odata.type.Time'}"/>
+								</viz.data:dimensions>
+								<viz.data:measures>
+									<viz.data:MeasureDefinition name="Crowd" 
+																value="{HistoricalJourneyPlanner>crowd1}"/>
+									<viz.data:MeasureDefinition name="Capacity" 
+																value="{HistoricalJourneyPlanner>capacity}"/>
+								</viz.data:measures>
+							</viz.data:FlattenedDataset>
+						</viz:dataset>
+						<viz:feeds>
+							<viz.feeds:FeedItem id="valueAxisFeed" 
+												uid="valueAxis" 
+												type="Measure" 
+												values="Crowd"/>
+						    <viz.feeds:FeedItem id="valueAxisFeed1" 
+						    					uid="valueAxis" 
+						    					type="Measure" 
+						    					values="Capacity"/>
+							<viz.feeds:FeedItem id="categoryAxisFeed" 
+												uid="categoryAxis" 
+												type="Dimension" 
+												values="Time"/>
+						</viz:feeds>
+					</viz:VizFrame>
 				</VBox>
 			</VBox>
 		</semantic:content>
