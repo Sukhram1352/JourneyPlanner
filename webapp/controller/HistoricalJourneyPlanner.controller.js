@@ -114,8 +114,6 @@ sap.ui.define([
 					oDayControl.setValueState("None");
 				}
 			}
-
-			oHistoricalJourneyPlannerModel.setProperty("/NewStationClientCopy",	jQuery.extend(true, {}, oNewStation));
 		},
 		
 		/**
@@ -124,11 +122,12 @@ sap.ui.define([
 		 * @returns {boolean} bEmptyVBoxVisiblity  Returns true if Empty VBox should be visible else false
 		 */
 		emptyVBoxVisiblity: function() {
+			var oNewStation = jQuery.extend(true, {}, this.getModel("HistoricalJourneyPlanner").getProperty("/NewStationClientCopy"));
 			var oStationControl = this.getView().byId("idStationDropDown");
 			var oDayControl = this.getView().byId("idDayDropDown");
 			var bEmptyVBoxVisiblity = true;
 
-			if (oStationControl.getValueState() !== "Error" && oStationControl.getValue() !== "" && oDayControl.getValueState() !== "Error" && oDayControl.getValue() !== "") {
+			if (oStationControl.getValueState() !== "Error" && oNewStation.Station !== "" && oDayControl.getValueState() !== "Error" && oNewStation.Day !== "") {
 				bEmptyVBoxVisiblity = false;
 			}
 
