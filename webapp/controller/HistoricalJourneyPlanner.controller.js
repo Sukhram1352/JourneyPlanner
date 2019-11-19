@@ -42,11 +42,19 @@ sap.ui.define([
 			oRoute.attachRoutePatternMatched(this._onRouteMatched, this);
 		},
 		
+		/**
+		 * Function is Called When Route Pattern is matched
+		 * @param {object} oEvent    Route Pattern Match Event
+		 * @public
+		 */
 		_onRouteMatched:function(oEvent){
 			var sStationName = oEvent.getParameter("arguments").StationName;
-			this.getModel("HistoricalJourneyPlanner").setProperty("/NewStationClientCopy", {
-				"Station": sStationName
-			});
+			
+			if(sStationName !== "*") {
+				this.getModel("HistoricalJourneyPlanner").setProperty("/NewStationClientCopy", {
+					"Station": sStationName
+				});
+			}
 		},
 		
 		/**
