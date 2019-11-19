@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="helloDialog" title="Select Day">
+		<FlexBox alignContent="Center" alignItems="Center" justifyContent="Center">
+			<ComboBox id="idDayDropDown" class="sapUiTinyMarginBegin" items="{RealTimeJourneyPlanner>/Days}" width="15rem" placeholder="Day"
+				required="true" change="onDropDownSelectionChange">
+				<core:Item key="{RealTimeJourneyPlanner>Day_Text}" text="{RealTimeJourneyPlanner>Day_Text}"/>
+			</ComboBox>
+		</FlexBox>
+		<beginButton>
+			<Button text="Ok" press="onOkBtnPress"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="onCancelBtnPress"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

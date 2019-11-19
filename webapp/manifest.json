@@ -110,7 +110,7 @@
 						"realTimeJourneyPlanner"
 					]
 				},{
-					"pattern": "historicalJourneyPlanner/{StationName}",
+					"pattern": "historicalJourneyPlanner/{StationName},{Day}",
 					"name": "historicalJourneyPlanner",
 					"target": [
 						"historicalJourneyPlanner"

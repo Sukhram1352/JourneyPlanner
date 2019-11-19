@@ -45,7 +45,8 @@ sap.ui.define([
 		
 		onHistoryTilePress : function(oEvent) {
 			this.getRouter().navTo("historicalJourneyPlanner", {
-				"StationName":"*"
+				"StationName":"*",
+				"Day":"*"
 			});
 		}
 	});

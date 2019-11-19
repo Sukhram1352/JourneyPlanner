@@ -49,11 +49,15 @@ sap.ui.define([
 		 */
 		_onRouteMatched:function(oEvent){
 			var sStationName = oEvent.getParameter("arguments").StationName;
+			var sDay = oEvent.getParameter("arguments").Day;
 			
 			if(sStationName !== "*") {
 				this.getModel("HistoricalJourneyPlanner").setProperty("/NewStationClientCopy", {
-					"Station": sStationName
+					"Station": sStationName,
+					"Day": sDay
 				});
+				
+				this.onPressSubmitButton();
 			}
 		},
 		
@@ -178,7 +182,7 @@ sap.ui.define([
 			var aFilters = [];
 			
 			aFilters.push(new Filter("station_name", FilterOperator.EQ, oNewJourney.Station));
-			// aFilters.push(new Filter("week_day", FilterOperator.EQ, oNewJourney.Day));
+		    aFilters.push(new Filter("week_day", FilterOperator.EQ, oNewJourney.Day));
 			oFilter = [new Filter(aFilters, true)];
 			
 			this.getOwnerComponent().getModel().read("/zstation_historic", {
@@ -196,6 +200,8 @@ sap.ui.define([
 					oHistoricalJourneyPlannerModel.setProperty("/FullScreenPageBusy", false);
 					
 					if(aCrowdData.length > 0) {
+						var oPopOver = this.getView().byId("idPopOver");
+                        oPopOver.connect(this.getView().byId("idCrowdVizFrame").getVizUid());
 						this.getView().byId("idCrowdVizFrame").setVizProperties({
 							title: {
 								visible: true,

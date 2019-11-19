@@ -200,6 +200,21 @@ sap.ui.define([
 					"Latitude": 28.611014,
 					"Longitude": 77.212244
 				}],
+				Days: [{
+					"Day_Text": "Sunday"
+				},{
+					"Day_Text": "Monday"
+				},{
+					"Day_Text": "Tuesday"
+				},{
+					"Day_Text": "Wednesday"
+				},{
+					"Day_Text": "Thursday"
+				},{
+					"Day_Text": "Friday"
+				},{
+					"Day_Text": "Saturday"
+				}]
 				// InterChangeStationColors: []
 			};
 		}
