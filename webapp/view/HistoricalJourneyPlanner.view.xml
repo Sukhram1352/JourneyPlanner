@@ -34,7 +34,7 @@
 							<viz.data:FlattenedDataset data="{HistoricalJourneyPlanner>/CrowdData}">
 								<viz.data:dimensions>
 									<viz.data:DimensionDefinition name="Time"
-										value="{path:'HistoricalJourneyPlanner>time', type:'sap.ui.model.odata.type.Time', sorter : { path : 'time' }}"/>
+										value="{path:'HistoricalJourneyPlanner>time', type:'sap.ui.model.odata.type.Time'}"/>
 								</viz.data:dimensions>
 								<viz.data:measures>
 									<viz.data:MeasureDefinition name="Crowd" value="{HistoricalJourneyPlanner>crowd1}"/>

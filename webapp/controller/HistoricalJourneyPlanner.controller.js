@@ -195,6 +195,9 @@ sap.ui.define([
 						aCrowdData[intI].capacity = Math.round(Number(aCrowdData[intI].capacity));
 						aCrowdData[intI].crowd1 = Math.round(Number(aCrowdData[intI].crowd1));
 					}
+					
+					aCrowdData.sort(function(oFirstCrowdData, oSecondCrowdData){return oFirstCrowdData.time.ms - oSecondCrowdData.time.ms;});
+					
 					oHistoricalJourneyPlannerModel.setProperty("/CrowdData", oData.results);
 					oHistoricalJourneyPlannerModel.setProperty("/FullScreenPageBusy", false);
 					
