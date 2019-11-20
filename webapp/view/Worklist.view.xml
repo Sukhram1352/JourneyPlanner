@@ -11,7 +11,7 @@
 						press="onRealTimeTilePress" 
 						backgroundImage="images/RealTimeCrowd.jpg">
 					</GenericTile>
-					<HBox class="sapUiLargeMarginBegin" justifyContent="Center">
+					<HBox class="sapUiLargeMarginBegin sapUiTinyMarginTop" justifyContent="Center">
 						<Text text="Ride Now" class="smartJourneyPlannerTileText"/>
 					</HBox>
 				</VBox>
@@ -21,7 +21,7 @@
 						press="onHistoryTilePress" 
 						backgroundImage="images/HistoricalCrowd.jpg">
 					</GenericTile>
-					<HBox class="sapUiMediumMarginBegin" justifyContent="Center">
+					<HBox class="sapUiMediumMarginBegin sapUiTinyMarginTop" justifyContent="Center">
 						<Text text="Check my Station" class="smartJourneyPlannerTileText"/>
 					</HBox>
 				</VBox>
