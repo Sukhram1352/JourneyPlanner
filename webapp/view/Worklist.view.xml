@@ -2,20 +2,30 @@
     xmlns="sap.m" 
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns:semantic="sap.m.semantic">
-	<Page title="Smart Journey Planner">
+	<Page title="MMap your Ride">
 		<content>
-			<GenericTile header="Real Time Journey Planner"
-			    class="sapUiLargeMarginBegin sapUiLargeMarginTop smartJourneyPlannerWorklistTiles" 
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
-				press="onRealTimeTilePress" 
-				backgroundImage="images/RealTimeCrowd.jpg">
-			</GenericTile>
-			<GenericTile header="Historical Journey Planner" 
-			    class="sapUiMediumMarginBegin sapUiLargeMarginTop smartJourneyPlannerWorklistTiles" 
-				busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
-				press="onHistoryTilePress" 
-				backgroundImage="images/HistoricalCrowd.jpg">
-			</GenericTile>
+			<HBox>
+				<VBox>
+					<GenericTile class="sapUiLargeMarginBegin sapUiLargeMarginTop smartJourneyPlannerWorklistTiles" 
+						busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
+						press="onRealTimeTilePress" 
+						backgroundImage="images/RealTimeCrowd.jpg">
+					</GenericTile>
+					<HBox class="sapUiLargeMarginBegin" justifyContent="Center">
+						<Text text="Ride Now" class="smartJourneyPlannerTileText"/>
+					</HBox>
+				</VBox>
+				<VBox>
+					<GenericTile class="sapUiMediumMarginBegin sapUiLargeMarginTop smartJourneyPlannerWorklistTiles" 
+						busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
+						press="onHistoryTilePress" 
+						backgroundImage="images/HistoricalCrowd.jpg">
+					</GenericTile>
+					<HBox class="sapUiMediumMarginBegin" justifyContent="Center">
+						<Text text="Check my Station" class="smartJourneyPlannerTileText"/>
+					</HBox>
+				</VBox>
+			</HBox>
 		</content>
 	</Page>
 </mvc:View>

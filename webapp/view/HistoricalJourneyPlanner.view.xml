@@ -1,7 +1,7 @@
 <mvc:View controllerName="journeyPlanner.JourneyPlanner.controller.HistoricalJourneyPlanner" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.m.semantic" xmlns:c="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:core="sap.ui.core"
 	xmlns:viz="sap.viz.ui5.controls" xmlns:viz.data="sap.viz.ui5.data" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
-	<semantic:FullscreenPage title="Historical Journey Planner" navButtonPress="onHistoricalJourneyPlannerNavBack" showNavButton="true"
+	<semantic:FullscreenPage title="Check my Station" navButtonPress="onHistoricalJourneyPlannerNavBack" showNavButton="true"
 		busy="{HistoricalJourneyPlanner>/FullScreenPageBusy}">
 		<semantic:content>
 			<VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom" width="100%">

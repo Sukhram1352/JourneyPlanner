@@ -192,8 +192,8 @@ sap.ui.define([
 					Utility.sanitizeEntitySetResult(aCrowdData, false);
 					
 					for(var intI = 0; intI < aCrowdData.length; intI++) {
-						aCrowdData[intI].capacity = Number(aCrowdData[intI].capacity);
-						aCrowdData[intI].crowd1 = Number(aCrowdData[intI].crowd1);
+						aCrowdData[intI].capacity = Math.round(Number(aCrowdData[intI].capacity));
+						aCrowdData[intI].crowd1 = Math.round(Number(aCrowdData[intI].crowd1));
 					}
 					oHistoricalJourneyPlannerModel.setProperty("/CrowdData", oData.results);
 					oHistoricalJourneyPlannerModel.setProperty("/FullScreenPageBusy", false);

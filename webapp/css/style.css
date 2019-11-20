@@ -234,3 +234,7 @@
 	margin-top: 0.4rem;
     margin-left: 0.6rem;
 }
+
+.smartJourneyPlannerTileText.sapMText {
+	font-style: italic;
+}
